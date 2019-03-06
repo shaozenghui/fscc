@@ -6,24 +6,24 @@
           <Form :model="formItem"   class="from" :rules="ruleInline" ref="formInline">
             <FormItem prop="email">
                   <Input  v-model="formItem.email" placeholder="请输入绑定邮箱地址" size='large'>
-                    <Icon type="ios-albums-outline" slot="prepend" />
+                    <Icon type="ios-mail" slot="prepend" />
                   </Input>
             </FormItem>
             <FormItem prop="code">
                 <Input  v-model="formItem.code" placeholder="邮箱验证码" size='large'  >
-                  <Icon type="ios-lock-outline" slot="prepend"></Icon>
+                  <Icon type="ios-barcode" slot="prepend"></Icon>
                   <Button type="primary" slot="append" @click="sendCode"  v-html="codeMessage"></Button>
                 </Input>
 
             </FormItem>
              <FormItem prop="newPsw">
                   <Input  v-model="formItem.newPsw" placeholder="请输入新密码" size='large' type="password">
-                    <Icon type="ios-lock-outline" slot="prepend"></Icon>
+                    <Icon type="md-lock" slot="prepend"></Icon>
                   </Input>
             </FormItem>
             <FormItem prop="newPswAgs">
                 <Input  v-model="formItem.newPswAgs" placeholder="请再次输入新密码" size='large'  type="password">
-                  <Icon type="ios-lock-outline" slot="prepend"></Icon>
+                  <Icon type="md-lock" slot="prepend"></Icon>
                 </Input>
             </FormItem>
             <FormItem>

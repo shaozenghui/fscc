@@ -9,10 +9,7 @@
           </span>
           <DropdownMenu slot="list">
               <DropdownItem>
-                 <router-link to="/RetrievePassword"> 修改密码</router-link>
-              </DropdownItem>
-              <DropdownItem>
-                 <a href="javascript:;">退出登录</a>
+                 <a href="javascript:;" @click="loginOut">退出登录</a>
               </DropdownItem>
           </DropdownMenu>
         </Dropdown>
@@ -40,6 +37,8 @@
 </template>
 <script>
 import menuList from '_c/menuList'
+import { setToken } from '@/lib/util'
+import { mapActions } from 'vuex'
 import './home.less'
 export default {
   data(){
@@ -138,7 +137,7 @@ export default {
               path: '/teamList'
             },
             {
-              title: '季度奖差异表',
+              title: '成员列表',
               name: '6-2',
               icon: 'md-alarm',
               path: '/MemberList'
@@ -175,6 +174,19 @@ export default {
   },
   components: {
     menuList
+  },
+  methods: {
+    ...mapActions([
+      'getLogOut'
+    ]),
+    loginOut(){
+      this.getLogOut().then(() => {
+        this.$Message.success('退出登录成功！')
+        this.$router.push({name:'login'})
+      }).catch(err => {
+        this.$Message.error('退出登录失败！')
+      })
+    }
   }
 }
 </script>

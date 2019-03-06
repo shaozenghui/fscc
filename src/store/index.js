@@ -4,6 +4,7 @@ import state from './state'
 import getters from './getters'
 import actions from './actions'
 import mutations from './mutations'
+import Login from './modules/login'
 import excelImport from './modules/excel-import'
 import InsuranceProductImport from './modules/InsuranceProduct-import'
 import preWeek from './modules/preWeek'
@@ -15,6 +16,7 @@ import QuaDifferent from './modules/QuaDifferent'
 import PlaDifferent from './modules/PlaDifferent'
 import MemberInformation from './modules/MemberInformation'
 import TeamList from './modules/teamList'
+import MemberList from './modules/MemberList'
 import { saveLocal } from './plugin/saveLocal'
 Vue.use(Vuex)
 
@@ -24,6 +26,7 @@ export default new Vuex.Store({
   actions,
   mutations,
   modules: {
+    Login,
     excelImport,
     InsuranceProductImport,
     preWeek,
@@ -34,7 +37,8 @@ export default new Vuex.Store({
     QuaDifferent,
     PlaDifferent,
     MemberInformation,
-    TeamList
+    TeamList,
+    MemberList
   },
   plugins: [ saveLocal ]
 })

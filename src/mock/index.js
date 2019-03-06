@@ -10,6 +10,7 @@ import { getQuaDifferentData } from './response/QuaDifferent'
 import { getPlaDifferentData } from './response/PlaDifferent'
 import { getMemberInformationData } from './response/MemberInformation'
 import { getTeamListData } from './response/teamList'
+import { getMemberListData } from './response/MemberList'
 Mock.mock(/\/getExcelData/, 'post', getExcelData)
 Mock.mock(/\/getInsuranceProductData/, 'post', getInsuranceProductData)
 Mock.mock(/\/getDetailData/, 'post', getDetailData)
@@ -21,6 +22,7 @@ Mock.mock(/\/getQuaDifferentData/, 'post', getQuaDifferentData)
 Mock.mock(/\/getPlaDifferentData/, 'post', getPlaDifferentData)
 Mock.mock(/\/getMemberInformationData/, 'post', getMemberInformationData)
 Mock.mock(/\/getTeamListData/, 'post', getTeamListData)
+Mock.mock(/\/getMemberListData/, 'post', getMemberListData)
 
 // Mock.setup({
 //   timeout: 5000

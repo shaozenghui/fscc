@@ -4,7 +4,8 @@ export default [
     path: '/',
     component: Home,
     meta: {
-      title: '首页'
+      title: '首页',
+      requiresAuth: true
     },
     children: [
       {
@@ -12,7 +13,8 @@ export default [
         name: 'excel-import',
         component: () => import('@/views/excel-import.vue'),
         meta: {
-          title: 'Excel导入'
+          title: 'Excel导入',
+          requiresAuth: true
         }
       },
       {
@@ -24,7 +26,8 @@ export default [
         name: 'InsuranceProduct',
         component: () => import('@/views/InsuranceProduct-import.vue'),
         meta: {
-          title: '保险产品导入'
+          title: '保险产品导入',
+          requiresAuth: true
         }
       },
       {
@@ -32,7 +35,8 @@ export default [
         name: 'AddInsuranceProduct',
         component: () => import('@/views/AddInsuranceProduct.vue'),
         meta: {
-          title: '添加保险产品'
+          title: '添加保险产品',
+          requiresAuth: true
         }
       },
       {
@@ -40,7 +44,8 @@ export default [
         name: 'detail',
         component: () => import('@/views/detail.vue'),
         meta: {
-          title: '详情表'
+          title: '详情表',
+          requiresAuth: true
         }
       },
       {
@@ -48,7 +53,8 @@ export default [
         name: 'perWeek',
         component: () => import('@/views/perWeek.vue'),
         meta: {
-          title: '业绩周报表'
+          title: '业绩周报表',
+          requiresAuth: true
         }
       },
       {
@@ -56,7 +62,8 @@ export default [
         name: 'MonthlyReport',
         component: () => import('@/views/MonthlyReport.vue'),
         meta: {
-          title: '业绩月报表'
+          title: '业绩月报表',
+          requiresAuth: true
         }
       },
       {
@@ -64,7 +71,8 @@ export default [
         name: 'PerPerfSummary',
         component: () => import('@/views/PerPerfSummary.vue'),
         meta: {
-          title: '个人业绩汇总表'
+          title: '个人业绩汇总表',
+          requiresAuth: true
         }
       },
       {
@@ -72,7 +80,8 @@ export default [
         name: 'WageDifferent',
         component: () => import('@/views/WageDifferent.vue'),
         meta: {
-          title: '工资差异表'
+          title: '工资差异表',
+          requiresAuth: true
         }
       },
       {
@@ -80,7 +89,8 @@ export default [
         name: 'QuaDifferent',
         component: () => import('@/views/QuaDifferent.vue'),
         meta: {
-          title: '季度奖差异表'
+          title: '季度奖差异表',
+          requiresAuth: true
         }
       },
       {
@@ -88,7 +98,8 @@ export default [
         name: 'PlaDifferent',
         component: () => import('@/views/PlaDifferent.vue'),
         meta: {
-          title: '平台奖差异表'
+          title: '平台奖差异表',
+          requiresAuth: true
         }
       },
       {
@@ -96,7 +107,8 @@ export default [
         name: 'teamList',
         component: () => import('@/views/teamList.vue'),
         meta: {
-          title: '团队列表'
+          title: '团队列表',
+          requiresAuth: true
         }
       },
       {
@@ -104,7 +116,8 @@ export default [
         name: 'MemberList',
         component: () => import('@/views/MemberList.vue'),
         meta: {
-          title: '成员列表'
+          title: '成员列表',
+          requiresAuth: true
         }
       },
       {
@@ -112,7 +125,8 @@ export default [
         name: 'ProductCommissionRate',
         component: () => import('@/views/ProductCommissionRate.vue'),
         meta: {
-          title: '产品佣金率设置'
+          title: '产品佣金率设置',
+          requiresAuth: true
         }
       },
       {
@@ -120,7 +134,8 @@ export default [
         name: 'MemberInformation',
         component: () => import('@/views/MemberInformation.vue'),
         meta: {
-          title: '员工信息'
+          title: '员工信息',
+          requiresAuth: true
         }
       },
       {
@@ -128,7 +143,8 @@ export default [
         name: 'PersonalSet',
         component: () => import('@/views/PersonalSet.vue'),
         meta: {
-          title: '个人设置'
+          title: '个人设置',
+          requiresAuth: true
         }
       }
 
@@ -139,7 +155,8 @@ export default [
     name: 'login',
     component: () => import('@/views/login.vue'),
     meta: {
-      title: '登录'
+      title: '登录',
+      requiresAuth: true
     }
   },
   {
@@ -148,6 +165,7 @@ export default [
     component: () => import('@/views/RetrievePassword.vue'),
     meta: {
       title: '找回密码'
+
     }
   }
 ]

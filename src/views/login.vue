@@ -25,6 +25,7 @@
 </template>
 <script>
 import { Login } from '@/api/login'
+import { mapActions } from 'vuex'
 export default {
   name: 'login',
   data(){
@@ -36,7 +37,7 @@ export default {
       ruleInline: {
           username: [
               { required: true, message: '请输入用户名', trigger: 'blur' },
-               { type: 'string', min: 6, message: '用户名最小长度为六位', trigger: 'blur' }
+               { type: 'string', min: 4, message: '用户名最小长度为四位', trigger: 'blur' }
           ],
           password: [
               { required: true, message: '请输入密码  ', trigger: 'blur' },
@@ -54,17 +55,19 @@ export default {
     }
   },
   methods:{
+    ...mapActions([
+      'getLogin'
+    ]),
     handleSubmit(name) {
         this.$refs[name].validate((valid) => {
             if (valid) {
-              // Login(this.formItem).then(res => {
-              //   console.log(res)
-              // }).catch(err => {
-              //   console.log(err)
-              // })
-                this.$Message.success('登录成功!');
-                localStorage.flag = true
-                 this.$router.push({path: '/'})
+              this.getLogin(this.formItem).then(() => {
+                 this.$Message.success('登录成功!');
+                  this.$router.push({path: '/'})
+              }).catch(() => {
+                this.$Message.error('用户名或者密码错误');
+              })
+
             } else {
                 this.$Message.error('请完善信息!');
             }
