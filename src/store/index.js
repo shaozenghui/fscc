@@ -4,7 +4,7 @@ import state from './state'
 import getters from './getters'
 import actions from './actions'
 import mutations from './mutations'
-import Login from './modules/login'
+import accountNumber from './modules/accountNumber'
 import excelImport from './modules/excel-import'
 import InsuranceProductImport from './modules/InsuranceProduct-import'
 import preWeek from './modules/preWeek'
@@ -26,7 +26,7 @@ export default new Vuex.Store({
   actions,
   mutations,
   modules: {
-    Login,
+    accountNumber,
     excelImport,
     InsuranceProductImport,
     preWeek,

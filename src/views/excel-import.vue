@@ -7,7 +7,12 @@
         </Select>
       </i-col>
       <i-col span='4' push='15'>
-        <Upload action="//jsonplaceholder.typicode.com/posts/" :show-upload-list='false'>
+        <Upload :action="`${baseURL}/finance/importExcel/ach`"
+          :headers="headers"
+          :show-upload-list='true'
+          :on-progress='progress'
+          :on-success='uploadSuccess'
+          :on-error='error'>
             <Button type="primary" icon="ios-cloud-upload-outline">Excel导入</Button>
         </Upload>
       </i-col>
@@ -23,10 +28,13 @@
 <script>
 import { mapGetters, mapActions } from 'vuex'
 import tablePage from '_c/tablePage'
+import { baseURL } from '@/config'
+import { getToken } from '@/lib/util'
 export default {
   name: 'excel-import',
   data(){
     return {
+      baseURL,
       achievement: '0',
       achievementList: [
         {
@@ -39,13 +47,13 @@ export default {
         },
         {
           value: '2',
-          label: '季度奖',
-        },
-        {
-          value: '3',
-          label: '平台奖',
+          label: '季度平台奖',
         }
+
       ],
+      headers:{
+         'Authorization': `Token ${getToken()}`
+      },
       columns:[
         {
           key: 'serialNumber',
@@ -150,6 +158,17 @@ export default {
     },
     submit() {
        this.$Message.info('保存成功！');
+    },
+    uploadSuccess(res, file, fileList){
+      console.log(res)
+    },
+    progress(event, file, fileList){
+      console.log(file)
+    },
+    error(error, file, fileList){
+      console.log(error)
+      // console.log(file)
+      // console.log(fileList)
     }
   },
   mounted(){

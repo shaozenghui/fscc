@@ -24,7 +24,6 @@
   </div>
 </template>
 <script>
-import { Login } from '@/api/login'
 import { mapActions } from 'vuex'
 export default {
   name: 'login',

@@ -11,6 +11,7 @@ const getters = {
 const actions = {
   getMemberInformationDataList ({ commit, state }) {
     getMemberInformationData().then(resp => {
+      console.log(resp)
       commit(GETMEBERINFORMATIONDATALIST, resp)
     }).catch(err => {
       console.log(err)

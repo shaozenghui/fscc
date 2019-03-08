@@ -13,7 +13,6 @@ class HttpRequest {
 
       }
     }
-
     return config
   }
   distroy (url) {

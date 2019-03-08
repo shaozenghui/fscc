@@ -1,4 +1,4 @@
-import { Login, LogOut } from '@/api/login'
+import { Login, LogOut, passwordChange, usernameChange } from '@/api/accountNumber'
 import { setToken } from '@/lib/util'
 // import { GETLOGIN } from '../types'
 const state = {
@@ -29,6 +29,27 @@ const actions = {
           setToken('')
           resolve()
         } else reject(new Error('Error'))
+      }).catch(err => {
+        reject(err)
+      })
+    })
+  },
+  getusernameChange ({ commit, state }, data) {
+    return new Promise((resolve, reject) => {
+      usernameChange(data).then(res => {
+        resolve(res)
+      }).catch(err => {
+        reject(err)
+      })
+    })
+  },
+  getPasswordChange ({ commit, state }, data) {
+    return new Promise((resolve, reject) => {
+      passwordChange(data).then(res => {
+        if (res.code === '200') {
+          setToken('')
+          resolve()
+        } else reject(res.code)
       }).catch(err => {
         reject(err)
       })
