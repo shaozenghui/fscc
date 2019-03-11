@@ -40,6 +40,7 @@
   </div>
 </template>
 <script>
+import { mapActions } from 'vuex'
 export default {
   name: 'RetrievePassword',
   data(){
@@ -74,6 +75,9 @@ export default {
     }
   },
   methods:{
+    ...mapActions([
+      'getsendCode'
+    ]),
      handleSubmit(name) {
         this.$refs[name].validate((valid) => {
           this.valid = valid
@@ -86,10 +90,15 @@ export default {
         })
     },
     sendCode(){
-      if(this.valid ){
+      if(this.formItem.email){
         var con = 60
         if(this.codeFlag){
           this.codeFlag = false
+          this.getsendCode(this.formItem.email).then(res => {
+            
+          }).catch(err => {
+
+          })
           var time = setInterval(() => {
               if(con == 0){
                 clearInterval(time)
@@ -102,7 +111,7 @@ export default {
               }
           },1000)
         }
-      }else this.$Message.error('请完善信息!');
+      } else this.$Message.error('请完善信息!');
     }
   }
 }

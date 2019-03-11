@@ -5,8 +5,12 @@
         <Button type="primary" @click="addInsur">添加</Button>
       </i-col>
       <i-col span='4' push='15'>
-        <Upload action="//jsonplaceholder.typicode.com/posts/" :show-upload-list='false'>
-            <Button type="primary" icon="ios-cloud-upload-outline">保险产品导入</Button>
+        <Upload
+        :action="`${baseURL}/finance/importExcel/insurance`"
+        :show-upload-list='false'
+        :headers="headers"
+        :on-success='uploadSuccess'>
+            <Button type="primary" icon="ios-cloud-upload-outline" >保险产品导入</Button>
         </Upload>
       </i-col>
     </Row>
@@ -16,16 +20,19 @@
 <script>
 import { mapGetters, mapActions } from 'vuex'
 import tablePage from '_c/tablePage'
+import { baseURL } from '@/config'
+import { getToken } from '@/lib/util'
 export default {
   name: 'InsuranceProduct-import',
   data(){
     return {
+      baseURL,
       columns:[
         {
           key: 'serialNumber',
           title: '序号',
           fixed: 'left',
-          width:150
+          width:50
         },
         {
           key: 'company',
@@ -33,49 +40,64 @@ export default {
           width:150,
         },
         {
-          key: 'apellation',
+          key: 'name',
           title: '名称',
-          width:150
+          width:300
         },
         {
-          key: 'Payment fee',
+          key: 'insurer_fee',
           title: '保司手续费',
-          width:150,
+          width:120,
           sortable: true
         },
         {
-          key: 'First year commission rate',
+          key: 'commission_rate_first',
           title: '首年佣金率',
-          width:150,
+          width:120,
           sortable: true
         },
         {
-          key: 'Tow year commission rate',
+          key: 'commission_rate_second',
           title: '次年佣金率',
-          width:150,
+          width:120,
           sortable: true
         },
         {
-          key: 'Three year commission rate',
+          key: 'commission_rate_third',
           title: '第3年佣金率',
-          width:150,
+          width:140,
           sortable: true
         },
         {
-          key: 'Fore year commission rate',
+          key: 'commission_rate_fourth',
           title: '第4年佣金率',
-          width:150,
+          width:140,
           sortable: true
         },
         {
-          key: 'Five year commission rate',
-          title: '第5年佣金率YC',
-          width:150,
+          key: 'commission_rate_fifth',
+          title: '第5年佣金率',
+          width:140,
           sortable: true,
-          fixed: 'right',
-        }
 
+        },
+        {
+          key: 'operation',
+          title: '操作',
+          fixed: 'right',
+          width:140,
+          render: (h, {row, column, index}) => {
+            return (
+              <div>
+                <i-button type='primary'  on-click={this.addHandle.bind(this, { row })}>更新</i-button>
+              </div>
+            )
+          }
+        }
       ],
+      headers:{
+         'Authorization': `Token ${getToken()}`
+      }
     }
   },
   computed:{
@@ -92,7 +114,13 @@ export default {
     ]),
     addInsur(){
       this.$router.push({name: 'AddInsuranceProduct'})
-    }
+    },
+    addHandle({ row }){
+      this.$router.push({name: 'AddInsuranceProduct',query:{id:row.id}})
+    },
+    uploadSuccess(res, file, fileList){
+      console.log(res)
+    },
   },
   mounted(){
     this.getInsuranceProductDataList()
