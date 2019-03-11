@@ -44,3 +44,15 @@ export const passwordChange = (data) => {
   })
 }
 
+export const sendCode = (data) => {
+  return axios.request({
+    url: '/finance/forgotPassword/sendCode',
+    method: 'post',
+    data: {
+      'email': data
+    },
+    headers: {
+      'Authorization': `Token ${getToken()}`
+    }
+  })
+}

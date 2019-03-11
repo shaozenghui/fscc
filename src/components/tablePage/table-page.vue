@@ -48,6 +48,12 @@ export default {
     onPageSizeChange(val){
       this.PageSize = val
     },
+    init(){
+      setTimeout(() => {
+        this.datatotal = this.dataList.length
+        this.data = this.dataList.slice(this.currentPage,this.currentPage+this.PageSize)
+      },1000)
+    }
   },
   watch:{
     currentPage(newVal, oldVal){
@@ -55,14 +61,13 @@ export default {
     },
     PageSize(){
       this.data = this.dataList.slice(this.currentPage,this.currentPage+this.PageSize)
+    },
+    dataList(){
+      this.init()
     }
   },
   mounted(){
-      setTimeout(() => {
-        // console.log(this.rowClassName)
-        this.datatotal = this.dataList.length
-        this.data = this.dataList.slice(this.currentPage,this.currentPage+this.PageSize)
-      },1000)
+      this.init()
   }
 }
 </script>

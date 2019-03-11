@@ -1,4 +1,4 @@
-import { getInsuranceProductData } from '@/api/InsuranceProduct-import'
+import { InsuranceProductData, InsuranceProductUpdate, InsuranceProductAdd } from '@/api/InsuranceProduct-import'
 import { GETINSURANCEPRODUCTDATALIST } from '../types'
 const state = {
   dataList: []
@@ -10,15 +10,41 @@ const getters = {
 }
 const actions = {
   getInsuranceProductDataList ({ commit, state }) {
-    getInsuranceProductData().then(resp => {
-      commit(GETINSURANCEPRODUCTDATALIST, resp)
+    InsuranceProductData().then(resp => {
+      commit(GETINSURANCEPRODUCTDATALIST, resp.result)
     }).catch(err => {
       console.log(err)
     })
+  },
+  getInsuranceProductUpdate ({ commit, state }, data) {
+    return new Promise((resolve, reject) => {
+      InsuranceProductUpdate(data).then(resp => {
+        resolve(resp)
+      }).catch(err => {
+        reject(err)
+      })
+    })
+  },
+  getInsuranceProductAdd ({ commit, state }, data) {
+    return new Promise((resolve, reject) => {
+      InsuranceProductAdd(data).then(resp => {
+        console.log(resp)
+        if (resp.code === '200') {
+          resolve(resp)
+        } else reject(resp.message)
+
+      }).catch(err => {
+        reject(err)
+      })
+    })
+
   }
 }
 const mutations = {
   [GETINSURANCEPRODUCTDATALIST] (state, data) {
+    data.map((item, index) => {
+      item.serialNumber = index + 1
+    })
     state.dataList = data
   }
 }
