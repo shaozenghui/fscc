@@ -12,7 +12,7 @@
         title="添加员工">
         <Row type="flex" justify="center" align="middle">
           <i-col span='20'>
-            <Form :model="formItem" label-position="left"  class="from" ref="formItem" :rules="ruleValidate" inline>
+            <Form v-if="modal" :model="formItem" label-position="left"  class="from" ref="formItem" :rules="ruleValidate" inline>
                 <FormItem label="邮箱"  prop="email">
                     <Input v-model="formItem.email" placeholder="请输入邮箱" size='large'></Input>
                 </FormItem>
@@ -93,7 +93,7 @@ export default {
             { min: 6,  message: '用户名最少为六位', trigger: 'blur', type: 'string' },
         ],
         password: [
-            {  message: '请输入密码', trigger: 'blur' },
+            { message: '请输入密码', trigger: 'blur' },
             { min: 8,  message: '密码最少为八位', trigger: 'blur', type: 'string' },
         ],
         is_superuser: [
@@ -136,7 +136,6 @@ export default {
                 <i-button type='primary' style={{marginRight:'20px'}} on-click={this.addHandle.bind(this,'change',{ row })}>更新</i-button>
                 <i-button type='error' on-click={this.remove.bind(this,{row, column, index})}>删除</i-button>
               </div>
-
             )
           }
         }
@@ -151,6 +150,15 @@ export default {
     ...mapGetters([
       "MemberInformationDataList"
     ])
+  },
+  watch:{
+    modal(newVal,oldVal){
+      if(!newVal){
+        for(var key in this.formItem){
+          this.formItem[key] = ''
+        }
+      }
+    }
   },
   methods:{
     ...mapActions([

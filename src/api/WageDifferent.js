@@ -1,11 +1,12 @@
 import axios from './index'
-
-export const getWageDifferentData = () => {
+import { getToken } from '@/lib/util'
+export const WageDifferentData = () => {
   return axios.request({
-    url: '/getWageDifferentData',
-    method: 'post',
-    data: {
-
+    url: '/finance/compare/pay',
+    method: 'get',
+    data: {},
+    headers: {
+      'Authorization': `Token ${getToken()}`
     }
   })
 }

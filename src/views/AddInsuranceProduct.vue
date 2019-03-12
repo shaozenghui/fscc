@@ -73,31 +73,31 @@ export default {
           ],
           commission_rate_first: [
             {  required: true, message: '请输入首年佣金率', trigger: 'blur' },
-            { min:0,max:1, type: 'number', message: '佣金率的范围为0~1', trigger: 'blur', transform(value) {
+            { min:0,max:0.99, type: 'number', message: '佣金率的范围为0~0.99', trigger: 'blur', transform(value) {
                 return Number(value);
             }}
           ],
            commission_rate_second: [
               { required: true, message: '请输入次年佣金率', trigger: 'blur' },
-              { type: 'number', min: 0, max: 1, message: '佣金率的范围为0~1之间', trigger: 'blur', transform(value) {
+              { type: 'number', min: 0, max: 0.99, message: '佣金率的范围为0~0.99之间', trigger: 'blur', transform(value) {
                 return Number(value);
             }}
           ],
           commission_rate_third: [
               { required: true, message: '请输入第三年佣金率', trigger: 'blur' },
-              { type: 'number', min: 0, max: 1, message: '佣金率的范围为0~1之间', trigger: 'blur', transform(value) {
+              { type: 'number', min: 0, max: 0.99, message: '佣金率的范围为0~0.99之间', trigger: 'blur', transform(value) {
                 return Number(value);
             }}
           ],
           commission_rate_fourth: [
               { required: true, message: '请输入第四年佣金率', trigger: 'blur'},
-              { type: 'number', min: 0, max: 1, message: '佣金率的范围为0~1之间', trigger: 'blur', transform(value) {
+              { type: 'number', min: 0, max: 0.99, message: '佣金率的范围为0~0.99之间', trigger: 'blur', transform(value) {
                 return Number(value);
             }}
           ],
           commission_rate_fifth: [
               { required: true, message: '请输入第五年佣金率', trigger: 'blur'},
-              {  type: 'number' , min: 0, max: 1, message: '佣金率的范围为0~1之间', trigger: 'blur' , transform(value) {
+              {  type: 'number' , min: 0, max: 0.99, message: '佣金率的范围为0~0.99之间', trigger: 'blur' , transform(value) {
                 return Number(value);
             }}
           ]

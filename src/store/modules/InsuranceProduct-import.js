@@ -16,6 +16,9 @@ const actions = {
       console.log(err)
     })
   },
+  getInsuranceProductDataExcel ({ commit, state }, data) {
+    commit(GETINSURANCEPRODUCTDATALIST, data)
+  },
   getInsuranceProductUpdate ({ commit, state }, data) {
     return new Promise((resolve, reject) => {
       InsuranceProductUpdate(data).then(resp => {
@@ -28,16 +31,13 @@ const actions = {
   getInsuranceProductAdd ({ commit, state }, data) {
     return new Promise((resolve, reject) => {
       InsuranceProductAdd(data).then(resp => {
-        console.log(resp)
         if (resp.code === '200') {
           resolve(resp)
         } else reject(resp.message)
-
       }).catch(err => {
         reject(err)
       })
     })
-
   }
 }
 const mutations = {

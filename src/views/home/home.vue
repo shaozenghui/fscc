@@ -150,12 +150,6 @@ export default {
           icon: 'md-alarm',
           children: [
             {
-              title: '产品佣金率设置',
-              name: '7-1',
-              icon: 'md-alarm',
-              path: '/ProductCommissionRate'
-            },
-            {
               title: '员工信息',
               name: '7-2',
               icon: 'md-alarm',

@@ -37,7 +37,7 @@ export default {
     return{
       data:[],
       datatotal:0,
-      currentPage:0,
+      currentPage:1,
       PageSize:10
     }
   },
@@ -49,25 +49,25 @@ export default {
       this.PageSize = val
     },
     init(){
-      setTimeout(() => {
+      // setTimeout(() => {
         this.datatotal = this.dataList.length
-        this.data = this.dataList.slice(this.currentPage,this.currentPage+this.PageSize)
-      },1000)
+        this.data = this.dataList.slice((this.currentPage - 1) * this.PageSize,this.currentPage*this.PageSize)
+      // },1000)
     }
   },
   watch:{
     currentPage(newVal, oldVal){
-      this.data = this.dataList.slice(this.currentPage,this.currentPage+this.PageSize)
+      this.init()
     },
     PageSize(){
-      this.data = this.dataList.slice(this.currentPage,this.currentPage+this.PageSize)
+      this.init()
     },
     dataList(){
       this.init()
     }
   },
   mounted(){
-      this.init()
+    this.init()
   }
 }
 </script>
@@ -77,4 +77,6 @@ export default {
 }
 
 </style>
-
+// 1   0  -  10
+// 2   10  - 20
+// 3   20  - 30

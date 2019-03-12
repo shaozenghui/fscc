@@ -1,4 +1,4 @@
-import { getWageDifferentData } from '@/api/WageDifferent'
+import { WageDifferentData } from '@/api/WageDifferent'
 import { GETWAGEDIFFERENTDATALIST } from '../types'
 const state = {
   dataList: []
@@ -10,8 +10,9 @@ const getters = {
 }
 const actions = {
   getWageDifferentDataList ({ commit, state }) {
-    getWageDifferentData().then(resp => {
-      commit(GETWAGEDIFFERENTDATALIST, resp)
+    WageDifferentData().then(resp => {
+      console.log(resp)
+      commit(GETWAGEDIFFERENTDATALIST, resp.result)
     }).catch(err => {
       console.log(err)
     })
@@ -19,6 +20,9 @@ const actions = {
 }
 const mutations = {
   [GETWAGEDIFFERENTDATALIST] (state, data) {
+    data.map((item, index) => {
+      item.SerialNumber = index + 1
+    })
     state.dataList = data
   }
 }
@@ -29,3 +33,4 @@ export default {
   actions,
   mutations
 }
+

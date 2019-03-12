@@ -17,68 +17,56 @@ export default {
     return{
       columns:[
         {
-          key: 'Serial number',
+          key: 'SerialNumber',
           title: '序号',
-          fixed: 'left',
-          width:100,
+          // fixed: 'left',
+          // width:100,
+        },
+
+        {
+          key: 'division_number',
+          title: '明亚号',
+          // width:150
+        },
+        {
+          key: 'recognizee',
+          title: '被保人',
+          // width:150,
+          // sortable: true
+        },
+        {
+          key: 'pre_commision',
+          title: '预估佣金',
+          // width:150,
+          sortable: true
+        },
+        {
+          key: 'commision',
+          title: '实收佣金',
+          // width:150,
+          sortable: true
+        },
+        {
+          key: 'policy_year',
+          title: '保单年度',
+          // width:200,
+          sortable: true
+        },
+        {
+          key: '年月',
+          title: '产品名称',
+          // width:200,
+          sortable: true
         },
         {
           key: 'operation',
           title: '操作',
-          width:100,
+          // width:100,
           render: (h, {row, column, index}) => {
             return (
               <i-button type='primary' on-click={this.submitOk.bind(event,index)}>OK</i-button>
             )
           }
-        },
-        {
-          key: 'name',
-          title: '姓名',
-          width:150
-        },
-        {
-          key: 'Job number',
-          title: '工号',
-          width:150,
-          sortable: true
-        },
-        {
-          key: 'Minya',
-          title: '明亚号',
-          width:150,
-          sortable: true
-        },
-        {
-          key: 'Policy number',
-          title: '保单号',
-          width:150,
-          sortable: true
-        },
-        {
-          key: 'Insurance company',
-          title: '保险公司',
-          width:200,
-          sortable: true
-        },
-        {
-          key: 'Product name',
-          title: '产品名称',
-          width:200,
-          sortable: true
-        },
-        {
-          key: 'Date of presentation',
-          title: '交单日期',
-          width:150,
-          sortable: true
-        },
-        {
-          key: 'achievement',
-          title: '业绩',
-          fixed: 'right',
-          width:150,
-          sortable: true
         },
       ],
     }

@@ -121,15 +121,6 @@ export default [
         }
       },
       {
-        path: 'ProductCommissionRate',
-        name: 'ProductCommissionRate',
-        component: () => import('@/views/ProductCommissionRate.vue'),
-        meta: {
-          title: '产品佣金率设置',
-          requiresAuth: true
-        }
-      },
-      {
         path: 'MemberInformation',
         name: 'MemberInformation',
         component: () => import('@/views/MemberInformation.vue'),

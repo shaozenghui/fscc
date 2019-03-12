@@ -110,7 +110,8 @@ export default {
   },
   methods:{
     ...mapActions([
-      'getInsuranceProductDataList'
+      'getInsuranceProductDataList',
+      'getInsuranceProductDataExcel'
     ]),
     addInsur(){
       this.$router.push({name: 'AddInsuranceProduct'})
@@ -119,7 +120,8 @@ export default {
       this.$router.push({name: 'AddInsuranceProduct',query:{id:row.id}})
     },
     uploadSuccess(res, file, fileList){
-      console.log(res)
+      this.getInsuranceProductDataExcel(res.result)
+      this.$Message.success('导入成功!')
     },
   },
   mounted(){
