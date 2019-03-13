@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { baseURL } from '@/config'
-
+import { getToken } from '@/lib/util'
 class HttpRequest {
   constructor (baseUrl = baseURL) {
     this.baseUrl = baseUrl
@@ -26,6 +26,11 @@ class HttpRequest {
       if (!Object.keys(this.queue).length) {
         //
       }
+      console.log(url)
+      if (url !== '/finance/login') {
+        config.headers['Authorization'] = `Token ${getToken()}`
+      }
+      // this.queue[url] = true
       return config
     }, error => {
       return Promise.reject(error)

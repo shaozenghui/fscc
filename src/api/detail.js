@@ -1,10 +1,9 @@
 import axios from './index'
 
-export const getDetailData = () => {
+export const DetailData = () => {
   return axios.request({
-    url: '/getDetailData',
-    method: 'post',
-    data: {
-    }
+    url: '/finance/reportForm/detail/search/?page_no=1',
+    method: 'get',
+    data: {}
   })
 }

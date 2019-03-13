@@ -10,6 +10,8 @@ const router = new Router({
 })
 
 router.beforeEach((to, from, next) => {
+  console.log(to.name)
+  console.log(routes)
   to.meta && setTitle(to.meta.title)
   const token = getToken()
   if (to.matched.some(record => record.meta.requiresAuth)) {

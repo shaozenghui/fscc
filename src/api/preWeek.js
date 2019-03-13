@@ -4,8 +4,6 @@ export const getPreWeekData = () => {
   return axios.request({
     url: '/getPreWeekData',
     method: 'post',
-    data: {
-
-    }
+    data: {}
   })
 }

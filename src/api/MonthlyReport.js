@@ -4,8 +4,6 @@ export const getMonthlyReportData = () => {
   return axios.request({
     url: '/getMonthlyReportData',
     method: 'post',
-    data: {
-
-    }
+    data: {}
   })
 }

@@ -1,4 +1,5 @@
 const state = {
-  activeName: 'excel-import'
+  activeName: '1',
+  openNames: '1'
 }
 export default state

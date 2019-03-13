@@ -1,4 +1,4 @@
-import { getDetailData } from '@/api/detail'
+import { DetailData } from '@/api/detail'
 import { GETDETAILDATALIST } from '../types'
 const state = {
   dataList: []
@@ -10,8 +10,9 @@ const getters = {
 }
 const actions = {
   getDetailDataList ({ commit, state }) {
-    getDetailData().then(resp => {
-      commit(GETDETAILDATALIST, resp)
+    DetailData().then(resp => {
+      console.log(resp)
+      // commit(GETDETAILDATALIST, resp)
     }).catch(err => {
       console.log(err)
     })

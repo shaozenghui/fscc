@@ -16,7 +16,15 @@
     </Header>
     <Layout>
       <Sider hide-trigger>
-        <Menu active-name="1" theme='dark' class="menu" width="auto" accordion>
+        <Menu
+        :active-name='activeName'
+        :open-names="openNames"
+        theme='dark'
+        class="menu"
+        width="auto"
+        accordion
+        @on-select='onSelect'
+        @on-open-change='onOpenChange'>
             <template v-for="(v, k) in menuList">
                 <MenuItem :name="v.name" :key="`MenuList_item${k}`" v-if='!v.children' >
                   <router-link :to='v.path'>
@@ -38,7 +46,7 @@
 <script>
 import menuList from '_c/menuList'
 import { setToken } from '@/lib/util'
-import { mapActions } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 import './home.less'
 export default {
   data(){
@@ -163,11 +171,21 @@ export default {
             }
           ]
         }
-      ]
+      ],
     }
   },
   components: {
     menuList
+  },
+  computed: {
+    ...mapState({
+      activeName: state => state.activeName,
+      openNames: state => {
+        let arr = []
+        arr.push(state.openNames)
+         return arr
+      }
+    })
   },
   methods: {
     ...mapActions([
@@ -180,6 +198,13 @@ export default {
       }).catch(err => {
         this.$Message.error('退出登录失败！')
       })
+    },
+    onSelect(name){
+      console.log(name)
+      this.$store.commit('activeName',name)
+    },
+    onOpenChange(name){
+      // console.log(name)
     }
   }
 }
