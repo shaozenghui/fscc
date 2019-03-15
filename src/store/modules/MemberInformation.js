@@ -30,6 +30,7 @@ const actions = {
   getChangeStaff ({ commit, state }, data) {
     return new Promise((resolve, reject) => {
       ChangeStaff(data).then(resp => {
+        console.log(resp)
         resolve(resp)
         if (resp.code && resp.code === '200') {
           resolve()

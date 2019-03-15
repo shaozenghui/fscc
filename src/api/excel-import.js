@@ -1,11 +1,10 @@
 import axios from './index'
 
-export const getExcelData = () => {
+export const SaveExcel = (data) => {
   return axios.request({
-    url: '/getExcelData',
-    method: 'post',
-    data: {
-     
-    }
+    url: `finance/importExcel/${data}Save`,
+    method: 'get',
+    data: {}
   })
 }
+

@@ -6,13 +6,7 @@
                 <TabPane label="个人信息">
                     <Form :model="formItem" :rules="formItemRuleInline" label-position="left"  class="from" ref="formItem" :label-width='100'>
                       <FormItem  prop="username" label="用户名">
-                          <Input v-model="formItem.username" placeholder="请输入用户名" size='large'></Input>
-                      </FormItem>
-                      <!-- <FormItem  prop="email">
-                          <Input v-model="formItem.email" placeholder="请输入邮箱" size='large' ></Input>
-                      </FormItem> -->
-                      <FormItem>
-                          <Button type="primary" @click="handleSubmit('formItem')">保存</Button>
+                          <Input v-model="formItem.username" placeholder="请输入用户名" size='large' disabled></Input>
                       </FormItem>
                     </Form>
                 </TabPane>
@@ -46,7 +40,6 @@ export default {
     return{
       formItem: {
         username:"",
-        // email:''
       },
       formItemPas: {
         password_old:"",
@@ -56,11 +49,7 @@ export default {
       formItemRuleInline: {
         username: [
           { required: true, message: '用户名不能为空', trigger: 'blur' },
-        ],
-        // email: [
-        //   { required: true, message: '邮箱不能为空', trigger: 'blur' },
-        //   { type: 'email', message: '电子邮件格式不正确', trigger: 'blur' }
-        // ],
+        ]
       },
       formItemPasRuleInline: {
         password_old: [
@@ -83,20 +72,6 @@ export default {
       'getPasswordChange',
       'getusernameChange'
     ]),
-    handleSubmit(name) {
-      this.$refs[name].validate((valid) => {
-        this.valid = valid
-          if (valid) {
-            this.getusernameChange(this.formItem).then(() => {
-              this.$Message.success('保存成功!');
-            }).catch((err) => {
-              this.$Message.error('保存失败!');
-            })
-          } else {
-              this.$Message.error('请完善信息!');
-          }
-      })
-    },
     PasSubmit(name) {
       this.$refs[name].validate((valid) => {
         this.valid = valid

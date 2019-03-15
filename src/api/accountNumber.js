@@ -19,10 +19,10 @@ export const LogOut = () => {
   })
 }
 
-export const usernameChange = (data = {}) => {
+export const usernameChange = (data) => {
   return axios.request({
     url: '/finance/profileManagement/home',
-    method: 'get',
+    method: data ? 'post' : 'get',
     data
   })
 }
@@ -37,8 +37,18 @@ export const passwordChange = (data) => {
 
 export const sendCode = (data) => {
   return axios.request({
-    url: `/finance/forgotPassword/sendCode/?email=${data}`,
-    method: 'get',
-    data: {}
+    url: '/finance/forgotPassword/sendCode',
+    method: 'post',
+    data: {
+      'email': data
+    }
+  })
+}
+
+export const retrievePassword = (data) => {
+  return axios.request({
+    url: '/finance/forgotPassword/retrievePassword',
+    method: 'post',
+    data
   })
 }

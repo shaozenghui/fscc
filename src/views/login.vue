@@ -28,7 +28,7 @@ import { mapActions } from 'vuex'
 export default {
   name: 'login',
   data(){
-    return{
+    return {
       formItem: {
         username:"",
         password:''
@@ -55,14 +55,16 @@ export default {
   },
   methods:{
     ...mapActions([
-      'getLogin'
+      'getLogin',
+      'setSuperuser',
+      'getSuperuser'
     ]),
     handleSubmit(name) {
         this.$refs[name].validate((valid) => {
             if (valid) {
-              this.getLogin(this.formItem).then(() => {
-                 this.$Message.success('登录成功!');
-                  this.$router.push({path: '/'})
+              this.getLogin(this.formItem).then(res => {
+                this.$Message.success('登录成功!');
+                this.$router.push({path: '/'})
               }).catch(() => {
                 this.$Message.error('用户名或者密码错误');
               })

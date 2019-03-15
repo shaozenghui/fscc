@@ -18,7 +18,7 @@ export default [
         }
       },
       {
-        path: '',
+        path: '/',
         redirect: 'excel-import'
       },
       {
@@ -138,7 +138,6 @@ export default [
           requiresAuth: true
         }
       }
-
     ]
   },
   {
@@ -156,7 +155,6 @@ export default [
     component: () => import('@/views/RetrievePassword.vue'),
     meta: {
       title: '找回密码'
-
     }
   }
 ]

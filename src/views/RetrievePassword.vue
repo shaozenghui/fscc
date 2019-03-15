@@ -16,16 +16,16 @@
                 </Input>
 
             </FormItem>
-             <FormItem prop="newPsw">
-                  <Input  v-model="formItem.newPsw" placeholder="请输入新密码" size='large' type="password">
+             <FormItem prop="password">
+                  <Input  v-model="formItem.password" placeholder="请输入新密码" size='large' type="password">
                     <Icon type="md-lock" slot="prepend"></Icon>
                   </Input>
             </FormItem>
-            <FormItem prop="newPswAgs">
+            <!-- <FormItem prop="newPswAgs">
                 <Input  v-model="formItem.newPswAgs" placeholder="请再次输入新密码" size='large'  type="password">
                   <Icon type="md-lock" slot="prepend"></Icon>
                 </Input>
-            </FormItem>
+            </FormItem> -->
             <FormItem>
                 <Button  class="submit" type="primary" @click="handleSubmit('formInline')" >重置密码</Button>
             </FormItem>
@@ -41,6 +41,7 @@
 </template>
 <script>
 import { mapActions } from 'vuex'
+import { setToken } from '@/lib/util'
 export default {
   name: 'RetrievePassword',
   data(){
@@ -48,9 +49,8 @@ export default {
       formItem: {
         email:"",
         code:'',
-        newPsw:'',
-        newPswAgs:'',
-        valid: false
+        password:'',
+        // newPswAgs:''
       },
       ruleInline: {
           email: [
@@ -61,14 +61,14 @@ export default {
               { required: true, message: '邮箱验证码', trigger: 'blur' },
                { type: 'string', min: 6,max: 6, message: '邮箱验证码为六位', trigger: 'blur' }
           ],
-          newPsw: [
+          password: [
               { required: true, message: '请输入新密码  ', trigger: 'blur' },
               { type: 'string', min: 6, message: '密码的最小长度为六位', trigger: 'blur' }
           ],
-          newPswAgs: [
-              { required: true, message: '请再次输入密码  ', trigger: 'blur' },
-              { type: 'string', min: 6, message: '密码的最小长度为六位', trigger: 'blur' }
-          ]
+          // newPswAgs: [
+          //     { required: true, message: '请再次输入密码  ', trigger: 'blur' },
+          //     { type: 'string', min: 6, message: '密码的最小长度为六位', trigger: 'blur' }
+          // ]
       },
       codeMessage:'发送验证码',
       codeFlag:true,
@@ -76,14 +76,21 @@ export default {
   },
   methods:{
     ...mapActions([
-      'getsendCode'
+      'getsendCode',
+      'getRetrievePassword'
     ]),
      handleSubmit(name) {
         this.$refs[name].validate((valid) => {
-          this.valid = valid
             if (valid) {
-                this.$Message.success('重置成功!');
-                 this.$router.push({path: '/'})
+                console.log(this.formItem)
+                this.getRetrievePassword(this.formItem).then((res) => {
+                    setToken(res.token)
+                    this.$Message.success('重置成功!');
+                    this.$router.push({path: '/'})
+                }).catch(err => {
+                   this.$Message.error('重置失败!');
+                })
+
             } else {
                 this.$Message.error('请完善信息!');
             }
@@ -95,9 +102,9 @@ export default {
         if(this.codeFlag){
           this.codeFlag = false
           this.getsendCode(this.formItem.email).then(res => {
-            
+              this.$Message.success('验证码发送成功请注意查收!');
           }).catch(err => {
-
+              this.$Message.error('验证码发送失败!');
           })
           var time = setInterval(() => {
               if(con == 0){

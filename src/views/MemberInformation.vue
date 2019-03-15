@@ -134,12 +134,13 @@ export default {
             return (
               <div>
                 <i-button type='primary' style={{marginRight:'20px'}} on-click={this.addHandle.bind(this,'change',{ row })}>更新</i-button>
-                <i-button type='error' on-click={this.remove.bind(this,{row, column, index})}>删除</i-button>
+
               </div>
             )
           }
         }
       ],
+      // <i-button type='error' on-click={this.remove.bind(this,{row, column, index})}>删除</i-button>
       staff_id:''
     }
   },
@@ -206,6 +207,9 @@ export default {
                 }
               })
             } else {
+              // let list = this.formItem
+              // Number(list.is_superuser)
+              // console.log(list)
               this.getChangeStaff({
                 id:this.staff_id,
                 data:this.formItem

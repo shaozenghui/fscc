@@ -18,6 +18,7 @@ import MemberInformation from './modules/MemberInformation'
 import TeamList from './modules/teamList'
 import MemberList from './modules/MemberList'
 import { saveLocal } from './plugin/saveLocal'
+
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -38,7 +39,7 @@ export default new Vuex.Store({
     PlaDifferent,
     MemberInformation,
     TeamList,
-    MemberList
+    MemberList,
   },
   plugins: [ saveLocal ]
 })

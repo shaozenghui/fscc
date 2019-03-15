@@ -2,17 +2,20 @@
   <div>
     <Row>
       <i-col span='6'>
-        <Select v-model="achievement" style="width:200px" @on-change='onChange'>
+        <Select v-model="achievement" style="width:200px" >
             <Option v-for="item in achievementList" :value="item.value" :key="item.value">{{ item.label }}</Option>
         </Select>
       </i-col>
       <i-col span='4' push='15'>
-        <Upload :action="`${baseURL}/finance/importExcel/ach`"
+        <Upload :action="BaseURL"
           :headers="headers"
           :show-upload-list='true'
           :on-progress='progress'
           :on-success='uploadSuccess'
-          :on-error='error'>
+          :on-error='error'
+          :before-upload='beforeUpload'
+          :data='yearMonth'
+          >
             <Button type="primary" icon="ios-cloud-upload-outline">Excel导入</Button>
         </Upload>
       </i-col>
@@ -34,19 +37,21 @@ export default {
   name: 'excel-import',
   data(){
     return {
-      baseURL,
-      achievement: '0',
+      BaseURL:'',
+      achievement: 'ach',
+      yearMonth:{},
+      ExcelDataList:[],
       achievementList: [
         {
-          value: '0',
+          value: 'ach',
           label: '业绩',
         },
         {
-          value: '1',
+          value: 'pay',
           label: '工资',
         },
         {
-          value: '2',
+          value: 'bonus',
           label: '季度平台奖',
         }
 
@@ -58,98 +63,45 @@ export default {
         {
           key: 'serialNumber',
           title: '序号',
-          fixed: 'left',
-          width:150
         },
         {
-          key: 'dataState',
-          title: '数据状态',
-          width:150,
-          filters: [
-              {
-                  label: '错误',
-                  value: 0
-              },
-              {
-                  label: '正确',
-                  value: 1
-              }
-          ],
-          filterMultiple: false,
-          filterMethod (value, row) {
-              if (value === 0) {
-                  return row.dataState === false;
-              } else {
-                  return row.dataState === true;
-              }
-          }
-        },
-        {
-          key: 'errorMsg',
+          key: 'error_info',
           title: '错误信息',
+        },
+        {
+          key: 'division_number',
+          title: '明亚号',
+        },
+        {
+          key: 'ins_company',
+          title: '保险公司',
+          width:150,
+        },
+        {
+          key: 'ins_product',
+          title: '保险产品',
+          width:150,
+        },
+        {
+          key: 'recognizee',
+          title: '被认领人',
           width:150
-        },
-        {
-          key: 'scalePremium',
-          title: '规模保费',
-          width:150,
-          sortable: true
-        },
-        {
-          key: 'OccupationalFeeIncrease',
-          title: '职业加费',
-          width:150,
-          sortable: true
-        },
-        {
-          key: 'AdditionalInvestment',
-          title: '额外投资',
-          width:150,
-          sortable: true
-        },
-        {
-          key: 'annualPremiumEquivalent',
-          title: '标准保费',
-          width:150,
-          sortable: true
-        },
-        {
-          key: 'StandardNumber',
-          title: '标准件数',
-          width:150,
-          sortable: true
-        },
-        {
-          key: 'Fyc',
-          title: 'FYC',
-          width:150,
-          sortable: true
-        },
-        {
-          key: 'achievement',
-          title: '业绩',
-          fixed: 'right',
-          width:150,
-          sortable: true
-        },
+        }
       ],
     }
-  },
-  computed:{
-    ...mapGetters([
-      "ExcelDataList"
-    ])
   },
   components:{
     tablePage
   },
+  watch: {
+    achievement(){
+       this.BaseURL = `${baseURL}/finance/importExcel/${this.achievement}`
+    }
+  },
   methods:{
     ...mapActions([
-      'getExcelDataList'
+      'getSaveExcel'
     ]),
-    onChange(val){
-      // console.log(val)
-    },
     rowClassName (row, index) {
         if (!row.dataState) {
             return 'demo-table-error-row';
@@ -157,28 +109,58 @@ export default {
         return '';
     },
     submit() {
-       this.$Message.info('保存成功！');
+      this.getSaveExcel(this.achievement).then(() => {
+        this.$Message.info('保存成功！');
+      }).catch(err => {
+        this.$Message.error('保存失败！');
+      })
+
     },
     uploadSuccess(res, file, fileList){
-      console.log(res)
+      console.log(res.result)
+      res.result.map((item, index) => {
+        item.serialNumber = index + 1
+      })
+      this.ExcelDataList = res.result
+      
     },
     progress(event, file, fileList){
-      console.log(file)
+
     },
     error(error, file, fileList){
-      console.log(error)
-      // console.log(file)
-      // console.log(fileList)
+      this.$Message.error('导入文件失败！');
+    },
+    beforeUpload(file){
+      if(this.achievement === 'pay') {
+        let str = file.name.slice(file.name.length - 11, file.name.length - 5)
+        this.yearMonth = {
+          year_month:str
+        }
+      } else if(this.achievement === 'bonus') {
+        let year_month_start = file.name.slice(file.name.length - 18, file.name.length - 12)
+        let year_month_end = file.name.slice(file.name.length - 11, file.name.length - 5)
+        this.yearMonth = {
+          year_month_start:year_month_start,
+          year_month_end:year_month_end,
+        }
+      }
+      let promise = new Promise((resolve) => {
+        this.$nextTick(function () {
+            resolve(true);
+        });
+      });
+      return promise; //通过返回一个promis对象解决
     }
   },
   mounted(){
-    this.getExcelDataList()
+    this.BaseURL = `${baseURL}/finance/importExcel/${this.achievement}`
+    // this.getExcelDataList()
   }
 }
 </script>
 <style lang="less" >
 .demo-table-error-row td{
-    background-color:red;
+    background-color:#f0f0f0;
     color: #000;
 }
 .submitButton{
