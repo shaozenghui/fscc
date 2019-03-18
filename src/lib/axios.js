@@ -25,22 +25,22 @@ class HttpRequest {
     instance.interceptors.request.use(config => {
       // 添加全局的loading...
       if (!Object.keys(this.queue).length) {
-        Spin.show({
-          render: (h) => {
-            return h('div', [
-              h('Icon', {
-                style: {
-                  animation: "ani-demo-spin 1s linear infinite"
-                },
-                props: {
-                  type: 'ios-loading',
-                  size: 18
-                }
-              }),
-              h('div', '请稍等，数据加载中。。。')
-            ])
-          }
-        })
+        // Spin.show({
+        //   render: (h) => {
+        //     return h('div', [
+        //       h('Icon', {
+        //         style: {
+        //           animation: '个人原因'
+        //         },
+        //         props: {
+        //           type: 'ios-loading',
+        //           size: 18
+        //         }
+        //       }),
+        //       h('div', '请稍等，数据加载中。。。')
+        //     ])
+        //   }
+        // })
       }
 
       if (url !== '/finance/login') {
@@ -55,7 +55,7 @@ class HttpRequest {
       return Promise.reject(error)
     })
     instance.interceptors.response.use(res => {
-      Spin.hide()
+      // Spin.hide()
       this.distroy(url)
       const { data } = res
       return data

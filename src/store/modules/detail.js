@@ -1,20 +1,9 @@
-import { DetailData, SearchDetailData, PolicyUserData, PolicyUserAdd } from '@/api/detail'
-import { GETDETAILDATALIST } from '../types'
+import { DetailData, SearchDetailData, PolicyUserData, PolicyUserAdd, PolicyUserUpdate, PolicyUserDelete } from '@/api/detail'
+import { GETDETAILDATALIST, GETPOLICYUSERLIST, GETPOLICYPERLIST } from '../types'
 const state = {
   dataList: [],
-  policyUserList: [
-    {
-      'division_number': 'SHN20181029000314731',
-      'user_id': '刘贤哲',
-      'rate': 0.1,
-      'id': 29
-    }
-  ],
-  UserList: [
-    [1, '刘贤哲'],
-    [2, '严岚'],
-    [3, '许刚']
-  ]
+  policyUserList: [],
+  policyPerList: []
 }
 const getters = {
   DetailDataList (state) {
@@ -23,14 +12,13 @@ const getters = {
   policyUserList (state) {
     return state.policyUserList
   },
-  UserList (state) {
-    return state.UserList
+  policyPerList (state) {
+    return state.policyPerList
   }
 }
 const actions = {
   getDetailDataList ({ commit, state }) {
     DetailData().then(res => {
-      console.log(res)
       commit(GETDETAILDATALIST, res.result)
     }).catch(err => {
       console.log(err)
@@ -39,30 +27,57 @@ const actions = {
   getSearchDetailData ({ commit, state }, data) {
     return new Promise((resolve, reject) => {
       SearchDetailData(data).then(res => {
-        console.log(res)
-        // commit(GETDETAILDATALIST, resp)
+        commit(GETDETAILDATALIST, res.result)
       }).catch(err => {
-        console.log(err)
+        reject(err)
       })
     })
   },
-  getPolicyUserData ({ commit, state }) {
+  getPolicyUserData ({ commit, state }, data) {
     return new Promise((resolve, reject) => {
-      PolicyUserData().then(res => {
-        console.log(res)
-        // commit(GETDETAILDATALIST, resp)
+      PolicyUserData(data).then(res => {
+        commit(GETPOLICYUSERLIST, res.result)
       }).catch(err => {
-        console.log(err)
+        reject(err)
       })
     })
   },
   getPolicyUserAdd ({ commit, state }, data) {
     return new Promise((resolve, reject) => {
       PolicyUserAdd(data).then(res => {
-        console.log(res)
-        // commit(GETDETAILDATALIST, resp)
+        if (data) {
+          if (res.code === '200') {
+            resolve()
+          } else reject(res.code)
+        } else {
+          commit(GETPOLICYPERLIST, res.user_list)
+        }
       }).catch(err => {
-        console.log(err)
+        reject(err)
+      })
+    })
+  },
+  getPolicyUserUpdate ({ commit, state }, data) {
+    return new Promise((resolve, reject) => {
+      PolicyUserUpdate(data).then(res => {
+        if (res.code) {
+          if (res.code === '200') {
+            resolve()
+          } else reject(res)
+        } else resolve(res)
+      }).catch(err => {
+        reject(err)
+      })
+    })
+  },
+  getPolicyUserDelete ({ commit, state }, data) {
+    return new Promise((resolve, reject) => {
+      PolicyUserDelete(data).then(res => {
+        if (res.code === '200') {
+          resolve()
+        } else reject(res)
+      }).catch(err => {
+        reject(err)
       })
     })
   }
@@ -70,6 +85,15 @@ const actions = {
 const mutations = {
   [GETDETAILDATALIST] (state, data) {
     state.dataList = data
+  },
+  [GETPOLICYUSERLIST] (state, data) {
+    state.policyUserList = data
+  },
+  [GETPOLICYPERLIST] (state, data) {
+    data.map(item => {
+      item[0] = item[0].toString()
+    })
+    state.policyPerList = data
   }
 }
 

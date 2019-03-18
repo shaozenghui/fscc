@@ -25,7 +25,7 @@
         </i-col>
       </Row>
       <tablePage :columns="columns" :dataList="DetailDataList" ></tablePage>
-      <Modal v-model="modal" @on-ok="ok" @on-cancel="cancel" fullscreen ok-text='保存'>
+      <Modal v-model="modal"  fullscreen>
           <p slot="header" style="text-align:center">保单联合人</p>
           <div style="text-align:center;width:1000px;margin:0 auto">
             <Row>
@@ -34,20 +34,23 @@
               </i-col>
             </Row>
             <tablePage :columns="policyUserColumns" :dataList="policyUserList" ></tablePage>
-            <Modal v-model="modal2" @on-ok="ok" @on-cancel="cancel" ok-text='保存'>
+            <Modal v-model="modal2"    @0n-ok ='ok' @on-cancel='cancel'>
                 <Row type="flex" justify="center" align="middle">
                   <i-col span='20'>
-                    <Form v-if="modal" :model="formItem" label-position="left"  class="from" ref="formItem" :rules="ruleValidate" >
-                        <FormItem label="明亚号" prop="division_number">
-                            <Input v-model="formItem.division_number" placeholder="请输入明亚号" size='large' ></Input>
+                    <Form v-if="Object.keys(ruleValidate).length" :model="formItem" label-position="left"  class="from" ref="formItem" :rules="ruleValidate" >
+                        <FormItem label="明亚号" >
+                            <Input v-model="division_number" disabled  placeholder="请输入明亚号" size='large' ></Input>
                         </FormItem>
-                        <FormItem label="成员" prop="user_id">
-                            <Select v-model="formItem.user_id">
+                        <FormItem label="成员" prop="user_id" v-if="flag">
+                            <Select v-model="formItem.user_id" >
                               <Option
-                              v-for="(item, index) in UserList"
+                              v-for="(item, index) in policyPerList"
                               :value="item[0]"
                               :key='`UserList_${index}`'>{{item[1]}}</Option>
                             </Select>
+                        </FormItem>
+                        <FormItem label="成员" v-if="!flag">
+                            <Input v-model="formItem.user_id" disabled  size='large' ></Input>
                         </FormItem>
                         <FormItem label="佣金率" prop="rate">
                             <Input v-model="formItem.rate" placeholder="请输入佣金率" size='large' ></Input>
@@ -66,6 +69,7 @@
 <script>
 import { mapGetters, mapActions } from 'vuex'
 import tablePage from '_c/tablePage'
+import { formatDate } from '@/lib/tools'
 export default {
   name: 'detail',
   data(){
@@ -251,13 +255,14 @@ export default {
           title: '操作',
           fixed: 'right',
           width:150,
-          render: () => {
+          render: (h, { row }) => {
               return (
-                <i-button type='primary' on-click={this.editHandel}>编辑联合人</i-button>
+                <i-button type='primary' on-click={this.editHandel.bind(this,{ row })}>编辑联合人</i-button>
               )
           }
         },
       ],
+      flag:true,
       policyUserColumns:[
         {
           key: 'division_number',
@@ -274,32 +279,29 @@ export default {
         {
           key: 'operation',
           title: '操作',
-          render: () => {
+          render: (h, { row }) => {
               return (
                <div>
-                  <i-button type='primary' on-click={this.policyUserChange} style={{marginRight:'20px'}}>更新</i-button>
-                  <i-button type='error' on-click={this.policyUserDelect}>删除</i-button>
+                  <i-button type='primary' on-click={this.policyUserChange.bind(this,{ row })} style={{marginRight:'20px'}}>更新</i-button>
+                  <i-button type='error' on-click={this.policyUserDelect.bind(this,{ row })}>删除</i-button>
                </div>
               )
           }
         },
       ],
       formItem: {
-        division_number:'',
-        user_id:'1',
+        user_id:'',
         rate:''
       },
       ruleValidate: {
-        division_number: [
-            { required: true, message: '请输入明亚号', trigger: 'blur' },
-            { min: 20,  message: '明亚号最少为二十位', trigger: 'blur', type: 'string' },
-        ],
         user_id: [
             { required: true, message: '请选择成员', trigger: 'blur', type: 'string' }
         ],
         rate: [
-            { required: true, message: '请输入佣金率', trigger: 'blur' },
-            { min: 0, max: 0.99, message: '佣金率最多为0.99', trigger: 'blur', type: 'string' },
+            {  required: true, message: '请输入佣金率', trigger: 'blur' },
+            {  min:0,max:0.99, type: 'number', message: '佣金率的范围为0~0.99', trigger: 'blur', transform(value) {
+                return Number(value);
+            }}
         ],
       },
       modal: false,
@@ -310,14 +312,17 @@ export default {
         recognizee:'',
         refer_date:'',
         division_number:'',
-      }
+      },
+      division_number:'',
+      is_add: true,
+      id:''
     }
   },
   computed: {
     ...mapGetters([
       "DetailDataList",
       'policyUserList',
-      'UserList'
+      'policyPerList'
     ])
   },
   components:{
@@ -328,38 +333,110 @@ export default {
        "getDetailDataList",
        'getSearchDetailData',
        'getPolicyUserData',
-       'getPolicyUserAdd'
+       'getPolicyUserAdd',
+       'getPolicyUserUpdate',
+       'getPolicyUserDelete'
     ]),
-    editHandel(){
+    editHandel({row}){
+      this.division_number = row.division_number
+      this.getPolicyUserData({
+        division_number:row.division_number
+      }).then(() => {
+
+      }).catch(err => {
+        this.$Message.error('数据初始化失败!');
+      })
       this.modal = true
     },
     search(){
-      console.log(this.searchData)
-      this.getSearchDetailData(this.searchData).then(() => {
-        
+      let data = this.searchData;
+      data.refer_date = formatDate(this.searchData.refer_date)
+      this.getSearchDetailData(data).then(() => {
       }).catch(err => {
-
+        this.$Message.error('数据初始化失败!');
       })
     },
-    ok () {
-        this.$Message.info('Clicked ok');
+    cancel(){
+      for (var key in this.formItem) {
+      this.formItem[key] = ''
+      }
     },
-    cancel () {
-        this.$Message.info('Clicked cancel');
+     ok(){
+       for (var key in this.formItem) {
+        this.formItem[key] = ''
+        }
     },
-    policyUserChange(){
-
+    policyUserChange({ row }){
+      this.flag = false
+      this.is_add = false
+      this.id = row.id
+      this.getPolicyUserAdd()
+      this.formItem.user_id = row.user_id
+      this.getPolicyUserUpdate({
+        id:row.id
+      }).then(res => {
+        this.modal2 = true
+        this.flag = false
+        this.formItem.rate = res.rate
+      })
     },
-    policyUserDelect(){
-
+    policyUserDelect({ row }){
+      this.getPolicyUserDelete(row.id).then(() => {
+          this.$Message.success('删除成功!');
+          this.getPolicyUserData({
+            division_number:this.division_number
+          }).then(() => {}).catch(err => {
+            this.$Message.error('数据初始化失败!');
+          })
+      }).catch(err => {
+         this.$Message.error('删除失败!');
+      })
     },
     policyUserAdd(){
+      this.flag = true
+      this.is_add = true
+      this.getPolicyUserAdd()
       this.modal2 = true
     },
     handleSubmit(name) {
       this.$refs[name].validate((valid) => {
           if (valid) {
-            this.$Message.error('保存成功!');
+            if (this.is_add) {
+             this.formItem.division_number = this.division_number
+              this.getPolicyUserAdd(this.formItem).then(() => {
+                this.modal2 = false
+                this.$Message.success('保存成功!');
+                 for (var key in this.formItem) {
+                  this.formItem[key] = ''
+                 }
+                this.getPolicyUserData({
+                  division_number:this.division_number
+                }).then(() => {}).catch(err => {
+                  this.$Message.error('数据初始化失败!');
+                })
+              }).catch(err => {
+                this.$Message.error('保存失败!');
+              })
+            } else {
+              this.getPolicyUserUpdate({
+                id:this.id,
+                data:{
+                  rate:this.formItem.rate
+                }
+              }).then(res => {
+                this.modal2 = false
+                this.$Message.success('保存成功!');
+                 for (var key in this.formItem) {
+                    this.formItem[key] = ''
+                  }
+                this.getPolicyUserData({
+                  division_number:this.division_number
+                }).then(() => {}).catch(err => {
+                  this.$Message.error('数据初始化失败!');
+                })
+              })
+            }
+
           } else {
             this.$Message.error('请完善信息!');
           }

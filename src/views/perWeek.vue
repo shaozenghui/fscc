@@ -8,7 +8,8 @@
         <i-button type='primary' icon='ios-search' @click="search">查询</i-button>
       </i-col>
       <i-col span='3'>
-        <i-button type='primary' icon='ios-cloud-upload'>导出</i-button>
+        <i-button type='primary' icon='ios-cloud-upload' @click="Download">导出</i-button>
+
       </i-col>
     </Row>
     <tablePage :columns="columns" :dataList="PreWeekDataList" ></tablePage>
@@ -17,35 +18,37 @@
 <script>
 import { mapGetters, mapActions } from 'vuex'
 import tablePage from '_c/tablePage'
+import { formatDate } from '@/lib/tools'
+import { baseURL2 } from '@/config'
 export default {
   name: 'excel-import',
   data(){
     return {
       columns:[
         {
-          key: 'serialNumber',
+          key: 'SerialNumber',
           title: '序号',
         },
         {
-          key: 'cname',
+          key: 'seller',
           title: '姓名',
         },
         {
-          key: 'team',
+          key: 'name',
           title: '团队',
         },
         {
-          key: 'premium',
-          title: '保费',
+          key: 'standard_premium',
+          title: '标准保费',
           sortable: true
         },
         {
-          key: 'Fyc',
+          key: 'fyc',
           title: 'FYC',
           sortable: true
         },
         {
-          key: 'StandardNumber',
+          key: 'standard_num',
           title: '标准件数',
           sortable: true
         },
@@ -56,21 +59,36 @@ export default {
   computed:{
     ...mapGetters([
       "PreWeekDataList"
-    ])
+    ]),
+    formatDates(){
+      return formatDate(this.endDate)
+    }
   },
   components:{
     tablePage
   },
   methods:{
     ...mapActions([
-      'getPreWeekDataList'
+      'getSearchPreWeekList',
+      'getDownloadPreWeek'
     ]),
     search(){
-      //
+      this.getSearchPreWeekList(this.formatDates).then(() => {
+      }).catch(err => {
+        this.$Message.error('查询失败!')
+      })
+    },
+    Download(){
+      this.getDownloadPreWeek(this.formatDates).then(res => {
+        let url = `${baseURL2}${res}`
+        window.open(url)
+      }).catch(err => {
+        this.$Message.error('导出失败!')
+      })
     }
   },
   mounted(){
-    this.getPreWeekDataList()
+
   }
 }
 </script>

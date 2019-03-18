@@ -16,11 +16,11 @@ export const SearchDetailData = (data) => {
   })
 }
 
-export const PolicyUserData = () => {
+export const PolicyUserData = (data) => {
   return axios.request({
     url: '/finance/policyUser/index',
-    method: 'get',
-    data: {}
+    method: 'post',
+    data
   })
 }
 
@@ -28,6 +28,22 @@ export const PolicyUserAdd = (data) => {
   return axios.request({
     url: '/finance/policyUser/add',
     method: data ? 'post' : 'get',
-    data: {}
+    data
+  })
+}
+
+export const PolicyUserUpdate = ({ id, data }) => {
+  return axios.request({
+    url: `/finance/policyUser/update/${id}`,
+    method: data ? 'post' : 'get',
+    data
+  })
+}
+
+export const PolicyUserDelete = (id) => {
+  return axios.request({
+    url: `/finance/policyUser/delete/${id}`,
+    method: 'get'
+
   })
 }

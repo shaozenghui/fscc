@@ -4,10 +4,7 @@
       <i-col span='8'>
         <Row :gutter='10'>
             <i-col span="12">
-                <DatePicker type="date" placeholder="开始日期" v-model="startDate"></DatePicker>
-            </i-col>
-            <i-col span="12">
-                  <DatePicker type="date" placeholder="结束日期" v-model="endDate"></DatePicker>
+                  <DatePicker type="month" placeholder="结束日期" v-model="endDate"></DatePicker>
             </i-col>
         </Row>
       </i-col>
@@ -15,7 +12,7 @@
         <i-button type='primary' icon='ios-search' @click="search">查询</i-button>
       </i-col>
       <i-col span='4'>
-        <i-button type='primary' icon='ios-cloud-upload'>Excel导出</i-button>
+        <i-button type='primary' icon='ios-cloud-upload' @click="Download">导出</i-button>
       </i-col>
     </Row>
     <tablePage :columns="columns" :dataList="MonthlyReportDataList" ></tablePage>
@@ -24,75 +21,86 @@
 <script>
 import tablePage from '_c/tablePage'
 import { mapGetters, mapActions } from 'vuex'
+import { formatDate } from '@/lib/tools'
+import { baseURL2 } from '@/config'
 export default {
   name:'MonthlyReport',
   data(){
     return{
       columns:[
         {
-          key: 'Serial number',
+          key: 'SerialNumber',
           title: '序号',
         },
         {
-          key: 'cname',
+          key: 'seller',
           title: '姓名',
 
         },
         {
-          key: 'team',
+          key: 'name',
           title: '团队',
           width:170
         },
         {
-          key: 'Receipt has been signed',
+          key: 'fyc_formal',
           title: '回执已签（正式保单）',
           sortable: true,
           width:180
         },
         {
-          key: 'Waiting for receipt',
+          key: 'fyc_wait',
           title: '等待回执',
           sortable: true
         },
         {
-          key: 'Underwriting',
+          key: 'fyc_delivery',
           title: '核保中（正式投保单）',
           sortable: true,
           width:180
         },
         {
-          key: 'Other',
-          title: '其他',
-          sortable: true
-        },
-        {
-          key: 'Subtotal',
+          key: 'total',
           title: '小计',
           sortable: true
         },
       ],
-      startDate:'',
       endDate:''
     }
   },
   computed:{
     ...mapGetters([
       "MonthlyReportDataList"
-    ])
+    ]),
+    formatDates(){
+      return formatDate(this.endDate)
+    }
   },
   methods:{
     ...mapActions([
-      'getMonthlyReportDataList'
+      'getSearchMonthlyReportList',
+      'getDownloadMonthlyReport'
     ]),
     search(){
-        // 
+      this.getSearchMonthlyReportList(this.formatDates).then(() => {
+      }).catch(err => {
+        this.$Message.error('查询失败!')
+      })
+    },
+    Download(){
+      this.getDownloadMonthlyReport(this.formatDates).then(res => {
+        let url = `${baseURL2}${res}`
+        window.open(url)
+      }).catch(err => {
+        this.$Message.error('导出失败!')
+      })
     }
   },
   components:{
     tablePage
   },
   mounted(){
-    this.getMonthlyReportDataList()
+
   }
 }
 </script>
