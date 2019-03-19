@@ -11,7 +11,7 @@
       <i-col span='4' offset='2'>
         <i-button type='primary' icon='ios-search' @click="search">查询</i-button>
       </i-col>
-      <i-col span='4'>
+      <i-col span='4'  push='8'>
         <i-button type='primary' icon='ios-cloud-upload' @click="Download">导出</i-button>
       </i-col>
     </Row>
@@ -83,6 +83,7 @@ export default {
     ]),
     search(){
       this.getSearchMonthlyReportList(this.formatDates).then(() => {
+        this.$Message.success('查询成功!')
       }).catch(err => {
         this.$Message.error('查询失败!')
       })

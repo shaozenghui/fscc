@@ -7,7 +7,7 @@
       <i-col span='3'>
         <i-button type='primary' icon='ios-search' @click="search">查询</i-button>
       </i-col>
-      <i-col span='3'>
+      <i-col span='3' push='7'>
         <i-button type='primary' icon='ios-cloud-upload' @click="Download">导出</i-button>
 
       </i-col>
@@ -74,6 +74,7 @@ export default {
     ]),
     search(){
       this.getSearchPreWeekList(this.formatDates).then(() => {
+        this.$Message.success('查询成功!')
       }).catch(err => {
         this.$Message.error('查询失败!')
       })

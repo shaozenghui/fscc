@@ -12,7 +12,6 @@ const actions = {
   getSearchMonthlyReportList ({ commit, state }, data) {
     return new Promise((resolve, reject) => {
       SearchMonthlyReportData(data).then(resp => {
-        console.log(resp)
         resolve()
         commit(GETMONTHLYREPORTDATALIST, resp.result)
       }).catch(err => {

@@ -7,14 +7,13 @@ import MenuList from '@/views/home/menuList'
 import iView from 'iview'
 Vue.use(Router)
 const router = new Router({
-  mode: process.env.NODE_ENV === 'production' ? 'history' : 'hash',
+  // mode: process.env.NODE_ENV === 'production' ? 'history' : 'hash',
   routes
 })
 
 const setSuperuser = (list, arr) => {
   return list.filter((item, index) => {
     if (arr[item.title]) {
-      console.log(item.title)
       if (item.children) item.children = setSuperuser(item.children, arr)
       return false
     } else return true
@@ -23,7 +22,6 @@ const setSuperuser = (list, arr) => {
 router.beforeEach((to, from, next) => {
   let superuser = getToken('superuser')
   if (superuser === 'false') {
-    console.log()
     let MenuLists = setSuperuser(MenuList, store.state.accountNumber.SuperuserList)
     store.commit('setSuperuser', MenuLists)
   }

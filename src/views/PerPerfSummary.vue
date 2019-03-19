@@ -17,7 +17,7 @@
       <i-col span='4' offset='2'>
         <i-button type='primary' icon='ios-search' @click="search">查询</i-button>
       </i-col>
-      <i-col span='4'>
+      <i-col span='4'  push='3'>
         <i-button type='primary' icon='ios-cloud-upload' @click="Download">导出</i-button>
       </i-col>
     </Row>
@@ -137,8 +137,10 @@ export default {
         seller: this.searchData.seller,
         start_date: this.StartDate,
         end_date: this.EndDate
-      }).then((res) => {}).catch(err => {
-        this.$Message.error('数据初始化失败')
+      }).then((res) => {
+        this.$Message.success('查询成功!')
+      }).catch(err => {
+        this.$Message.error('查询失败!')
       })
     },
     Download(){

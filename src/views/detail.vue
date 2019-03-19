@@ -20,9 +20,9 @@
         <i-col span='3'>
           <i-button type='primary' icon='ios-search' @click="search">查询</i-button>
         </i-col>
-        <i-col span='3'>
+        <!-- <i-col span='3'>
           <i-button type='primary' icon='ios-cloud-upload'>导出</i-button>
-        </i-col>
+        </i-col> -->
       </Row>
       <tablePage :columns="columns" :dataList="DetailDataList" ></tablePage>
       <Modal v-model="modal"  fullscreen>
@@ -352,8 +352,9 @@ export default {
       let data = this.searchData;
       data.refer_date = formatDate(this.searchData.refer_date)
       this.getSearchDetailData(data).then(() => {
+        this.$Message.sucess('查询成功!')
       }).catch(err => {
-        this.$Message.error('数据初始化失败!');
+        this.$Message.error('查询失败!');
       })
     },
     cancel(){

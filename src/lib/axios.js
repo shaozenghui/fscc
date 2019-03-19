@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { baseURL } from '@/config'
 import { getToken } from '@/lib/util'
-import { Spin } from 'iview'
+// import { Spin } from 'iview'
 class HttpRequest {
   constructor (baseUrl = baseURL) {
     this.baseUrl = baseUrl
@@ -30,7 +30,7 @@ class HttpRequest {
         //     return h('div', [
         //       h('Icon', {
         //         style: {
-        //           animation: '个人原因'
+        //           animation: 'ani-demo-spin 1s linear infinite'
         //         },
         //         props: {
         //           type: 'ios-loading',

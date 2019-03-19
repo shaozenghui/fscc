@@ -14,10 +14,10 @@
           <i-col span='20'>
             <Form v-if="modal" :model="formItem" label-position="left"  class="from" ref="formItem" :rules="ruleValidate" inline>
                 <FormItem label="邮箱"  prop="email">
-                    <Input v-model="formItem.email" placeholder="请输入邮箱" size='large'></Input>
+                    <Input :disabled='!is_add' v-model="formItem.email" placeholder="请输入邮箱" size='large'></Input>
                 </FormItem>
                 <FormItem label="用户名" prop="username">
-                    <Input v-model="formItem.username" placeholder="请输入用户名" size='large'></Input>
+                    <Input :disabled='!is_add' v-model="formItem.username" placeholder="请输入用户名" size='large'></Input>
                 </FormItem>
                 <FormItem label="密码" prop="password">
                     <Input v-model="formItem.password" placeholder="请输入密码" size='large' type="password"></Input>
@@ -179,7 +179,6 @@ export default {
         this.getChangeStaff({
             id:row.id
           }).then(res => {
-
           res.is_superuser = res.is_superuser.toString()
           res.is_active = res.is_active.toString()
           this.formItem = Object.assign(this.formItem, res)

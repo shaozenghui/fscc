@@ -6,7 +6,8 @@ const state = {
     '团队': true,
     '团队列表': true,
     '员工信息': true,
-    '成员列表': true
+    '成员列表': true,
+    '员工设置': true
   },
   MenuLists: MenuList
 }
@@ -76,6 +77,7 @@ const actions = {
     return new Promise((resolve, reject) => {
       retrievePassword(data).then(res => {
         if (res.code === '200') {
+          setToken(res.is_superuser, 'superuser')
           resolve(res)
         } else reject(res.code)
       }).catch(err => {

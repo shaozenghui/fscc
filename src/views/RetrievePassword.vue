@@ -82,7 +82,6 @@ export default {
      handleSubmit(name) {
         this.$refs[name].validate((valid) => {
             if (valid) {
-                console.log(this.formItem)
                 this.getRetrievePassword(this.formItem).then((res) => {
                     setToken(res.token)
                     this.$Message.success('重置成功!');

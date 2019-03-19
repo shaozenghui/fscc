@@ -12,7 +12,6 @@ const actions = {
   getPerPerfSummaryDataList ({ commit, state }, data) {
     return new Promise((resolve, reject) => {
       getPerPerfSummaryData(data).then(resp => {
-        console.log(resp.result)
         resolve()
         commit(GETPERPERFSUMMARYDATALIST, resp.result)
       }).catch(err => {
@@ -23,7 +22,6 @@ const actions = {
   getDownloadPerPerfSummary ({ commit, state }, data) {
     return new Promise((resolve, reject) => {
       DownloadPerPerfSummary(data).then(resp => {
-        console.log(resp)
         if (resp.code === '200') {
           resolve(resp.url)
         } else reject(resp)

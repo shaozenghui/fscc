@@ -70,8 +70,10 @@ export default {
   methods:{
     ...mapActions([
       'getPasswordChange',
-      'getusernameChange'
+      'getusernameChange',
+      'getLogOut'
     ]),
+    
     PasSubmit(name) {
       this.$refs[name].validate((valid) => {
         this.valid = valid

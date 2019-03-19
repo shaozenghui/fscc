@@ -12,7 +12,6 @@ const actions = {
   getSaveExcel ({ commit, state }, data) {
     return new Promise((resolve, reject) => {
       SaveExcel(data).then(res => {
-        console.log(res)
         if (res.code === '200') {
           resolve()
         } else reject(res)

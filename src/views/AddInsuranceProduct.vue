@@ -5,7 +5,7 @@
           <p class="fromtitle">添加保险产品</p>
           <Form v-if="Object.keys(ruleInline).length"  :model="formItem" label-position="left" :label-width="160" class="from" :rules="ruleInline" ref="formInline">
             <FormItem label="公司"  prop="company">
-                  <Input v-model="formItem.company" placeholder="请输入公司" size='large'></Input>
+                  <Input v-model="formItem.company" placeholder="请输入公司" size='large' :disabled='id'></Input>
             </FormItem>
             <FormItem label="名称"  prop="name">
                   <Input v-model="formItem.name" placeholder="请输入名称" size='large'></Input>
@@ -46,6 +46,7 @@ export default {
   name: 'AddInsuranceProduct',
   data(){
     return {
+      flag:false,
       formItem: {
         company:'',
         name:'',
@@ -114,7 +115,6 @@ export default {
         this.$refs[name].validate((valid) => {
             if (valid) {
               if (this.id) {
-
                 this.getInsuranceProductUpdate({
                   id:id,
                   data:this.formItem

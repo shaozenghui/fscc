@@ -9,7 +9,7 @@
       <i-col span='4' push='15'>
         <Upload :action="BaseURL"
           :headers="headers"
-          :show-upload-list='true'
+          :show-upload-list='false'
           :on-progress='progress'
           :on-success='uploadSuccess'
           :on-error='error'
@@ -75,17 +75,14 @@ export default {
         {
           key: 'ins_company',
           title: '保险公司',
-          width:150,
         },
         {
           key: 'ins_product',
           title: '保险产品',
-          width:150,
         },
         {
           key: 'recognizee',
-          title: '被认领人',
-          width:150
+          title: '被保人',
         }
       ],
     }
@@ -109,28 +106,50 @@ export default {
         return '';
     },
     submit() {
+      this.$Spin.show({
+        render: (h) => {
+          return (
+            <div>
+              <Icon type='ios-loading' size='18' style={{animation:'ani-demo-spin 1s linear infinite'}} />
+              <div>正在保存文件请稍等。。。</div>
+            </div>
+          )
+        }
+      })
       this.getSaveExcel(this.achievement).then(() => {
         this.$Message.info('保存成功！');
+        this.$Spin.hide();
       }).catch(err => {
         this.$Message.error('保存失败！');
       })
 
     },
     uploadSuccess(res, file, fileList){
-      console.log(res.result)
       res.result.map((item, index) => {
         item.serialNumber = index + 1
       })
       this.ExcelDataList = res.result
-      
+      this.$Message.success('导入文件成功！');
+      this.$Spin.hide();
     },
     progress(event, file, fileList){
 
     },
     error(error, file, fileList){
+      this.$Spin.hide();
       this.$Message.error('导入文件失败！');
     },
     beforeUpload(file){
+      this.$Spin.show({
+        render: (h) => {
+          return (
+            <div>
+              <Icon type='ios-loading' size='18' style={{animation:'ani-demo-spin 1s linear infinite'}} />
+              <div>正在导入文件请稍等。。。</div>
+            </div>
+          )
+        }
+      })
       if(this.achievement === 'pay') {
         let str = file.name.slice(file.name.length - 11, file.name.length - 5)
         this.yearMonth = {
@@ -166,5 +185,6 @@ export default {
 .submitButton{
   margin-top: 20px;
 }
+
 </style>
 

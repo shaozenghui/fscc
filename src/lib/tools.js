@@ -1,3 +1,4 @@
+
 export const doCustomTimes = (times, callback) => {
   let i = -1
   while (++i < times) {
@@ -19,6 +20,6 @@ export const formatDate = (date) => {
     var second = date.getSeconds()
     // return year + '-' + formatTen(month) + '-' + formatTen(day)
     return  year + formatTen(month) + formatTen(day)
-  }
+  } else return ''
 }
 

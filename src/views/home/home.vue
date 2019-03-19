@@ -3,28 +3,18 @@
   <Layout style="height:100%">
     <Header class="logo">
       财务结算系统
-        <Dropdown class="HeaderDown">
-          <span>
-              张三
-          </span>
-          <DropdownMenu slot="list">
-              <DropdownItem>
-                 <a href="javascript:;" @click="loginOut">退出登录</a>
-              </DropdownItem>
-          </DropdownMenu>
-        </Dropdown>
+       <i-button class="loginOut" type='primary' @click="loginOut">退出登录</i-button>
     </Header>
     <Layout>
       <Sider hide-trigger>
-        <Menu
-        :active-name='activeName'
-        :open-names="openNames"
+        <Menu ref='side_menu'
+        active-name='1-1'
+        :open-names="['1']"
         theme='dark'
         class="menu"
         width="auto"
         accordion
-        @on-select='onSelect'
-        @on-open-change='onOpenChange'>
+       >
             <template v-for="(v, k) in MenuList">
                 <MenuItem :name="v.name" :key="`MenuList_item${k}`" v-if='!v.children' >
                   <router-link :to='v.path'>
@@ -57,16 +47,6 @@ export default {
   components: {
     menuList
   },
-  computed: {
-    ...mapState({
-      activeName: state => state.activeName,
-      openNames: state => {
-        let arr = []
-        arr.push(state.openNames)
-         return arr
-      }
-    })
-  },
   methods: {
     ...mapActions([
       'getLogOut'
@@ -75,16 +55,19 @@ export default {
       this.getLogOut().then(() => {
         this.$Message.success('退出登录成功！')
         this.$router.push({name:'login'})
-      }).catch(err => {    -
+      }).catch(err => {
         this.$Message.error('退出登录失败！')
       })
     },
-    onSelect(name){
-      this.$store.commit('activeName',name)
-    },
-    onOpenChange(name){
-      // console.log(name)
-    }
+    // onSelect(name){
+    //   this.$store.commit('activeName',name)
+    //   this.$refs.side_menu.updateOpened()
+    //   this.$refs.side_menu.updateActiveName()
+    // },
+    // onOpenChange(name){
+    //   // console.log(name)
+    //   // this.$store.commit('openNames',name)
+    // }
   },
   mounted(){
     this.MenuList = this.$store.state.accountNumber.MenuLists
@@ -92,3 +75,9 @@ export default {
 
 }
 </script>
+<style lang="less">
+.loginOut{
+  float: right;
+  margin-top:15px
+}
+</style>
