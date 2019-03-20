@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { baseURL } from '@/config'
 import { getToken } from '@/lib/util'
-// import { Spin } from 'iview'
+import { Message } from 'iview'
 class HttpRequest {
   constructor (baseUrl = baseURL) {
     this.baseUrl = baseUrl
@@ -25,24 +25,8 @@ class HttpRequest {
     instance.interceptors.request.use(config => {
       // 添加全局的loading...
       if (!Object.keys(this.queue).length) {
-        // Spin.show({
-        //   render: (h) => {
-        //     return h('div', [
-        //       h('Icon', {
-        //         style: {
-        //           animation: 'ani-demo-spin 1s linear infinite'
-        //         },
-        //         props: {
-        //           type: 'ios-loading',
-        //           size: 18
-        //         }
-        //       }),
-        //       h('div', '请稍等，数据加载中。。。')
-        //     ])
-        //   }
-        // })
-      }
 
+      }
       if (url !== '/finance/login') {
         if (url !== '/finance/forgotPassword/sendCode') {
           if (url !== '/finance/forgotPassword/retrievePassword') {
@@ -52,10 +36,10 @@ class HttpRequest {
       }
       return config
     }, error => {
+      Message.error('请求超时!')
       return Promise.reject(error)
     })
     instance.interceptors.response.use(res => {
-      // Spin.hide()
       this.distroy(url)
       const { data } = res
       return data

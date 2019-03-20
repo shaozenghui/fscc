@@ -54,7 +54,6 @@ export default {
           value: 'bonus',
           label: '季度平台奖',
         }
-
       ],
       headers:{
          'Authorization': `Token ${getToken()}`
@@ -63,10 +62,12 @@ export default {
         {
           key: 'serialNumber',
           title: '序号',
+          width:50
         },
         {
           key: 'error_info',
           title: '错误信息',
+          width:240
         },
         {
           key: 'division_number',
@@ -79,6 +80,7 @@ export default {
         {
           key: 'ins_product',
           title: '保险产品',
+          width:290
         },
         {
           key: 'recognizee',

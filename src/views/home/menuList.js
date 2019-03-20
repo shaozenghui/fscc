@@ -6,7 +6,7 @@ export default [
     children: [
       {
         title: 'Excel导入',
-        name: '1-1',
+        name: 'excel-import',
         icon: 'ios-cloud-upload-outline',
         path: '/excel-import'
       }
@@ -19,13 +19,13 @@ export default [
     children: [
       {
         title: '保险产品导入',
-        name: '2-1',
+        name: 'InsuranceProduct-import',
         icon: 'logo-xbox',
         path: '/InsuranceProduct-import'
       },
       {
         title: '添加保险产品',
-        name: '2-2',
+        name: 'AddInsuranceProduct',
         icon: 'logo-xbox',
         path: '/AddInsuranceProduct'
       }
@@ -38,7 +38,7 @@ export default [
     children: [
       {
         title: '详情表',
-        name: '3-1',
+        name: 'detail',
         icon: 'ios-paper-outline',
         path: '/detail'
       }
@@ -51,19 +51,19 @@ export default [
     children: [
       {
         title: '业绩周报表',
-        name: '4-1',
+        name: 'perWeek',
         icon: 'ios-stats-outline',
         path: '/perWeek'
       },
       {
         title: '业绩月报表',
-        name: '4-2',
+        name: 'MonthlyReport',
         icon: 'ios-stats-outline',
         path: '/MonthlyReport'
       },
       {
         title: '个人业绩汇总表',
-        name: '4-3',
+        name: 'PerPerfSummary',
         icon: 'ios-stats-outline',
         path: '/PerPerfSummary'
       }
@@ -76,19 +76,19 @@ export default [
     children: [
       {
         title: '工资差异表',
-        name: '5-1',
+        name: 'WageDifferent',
         icon: 'ios-film-outline',
         path: '/WageDifferent'
       },
       {
         title: '季度奖差异表',
-        name: '5-2',
+        name: 'QuaDifferent',
         icon: 'ios-film-outline',
         path: '/QuaDifferent'
       },
       {
         title: '平台奖差异表',
-        name: '5-3',
+        name: 'PlaDifferent',
         icon: 'ios-film-outline',
         path: '/PlaDifferent'
       }
@@ -101,27 +101,27 @@ export default [
     children: [
       {
         title: '团队列表',
-        name: '6-1',
+        name: 'teamList',
         icon: 'ios-people',
         path: '/teamList'
       },
       {
         title: '成员列表',
-        name: '6-2',
+        name: 'MemberList',
         icon: 'ios-people',
         path: '/MemberList'
       }
     ]
   },
   {
-    title: '员工设置',
+    title: '员工',
     name: '8',
-    icon: 'ios-settings-outline',
+    icon: 'md-contacts',
     children: [
       {
         title: '员工信息',
-        name: '8-2',
-        icon: 'ios-settings-outline',
+        name: 'MemberInformation',
+        icon: 'md-contacts',
         path: '/MemberInformation'
       }
     ]
@@ -133,7 +133,7 @@ export default [
     children: [
       {
         title: '个人设置',
-        name: '7-3',
+        name: 'PersonalSet',
         icon: 'ios-settings-outline',
         path: '/PersonalSet'
       }

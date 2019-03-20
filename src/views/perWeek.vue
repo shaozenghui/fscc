@@ -53,7 +53,7 @@ export default {
           sortable: true
         },
       ],
-      endDate:''
+      endDate:new Date()
     }
   },
   computed:{
@@ -89,7 +89,7 @@ export default {
     }
   },
   mounted(){
-
+    this.search()
   }
 }
 </script>

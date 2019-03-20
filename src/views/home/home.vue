@@ -8,8 +8,8 @@
     <Layout>
       <Sider hide-trigger>
         <Menu ref='side_menu'
-        active-name='1-1'
-        :open-names="['1']"
+        :active-name="activeName"
+        :open-names="openNames"
         theme='dark'
         class="menu"
         width="auto"
@@ -41,7 +41,9 @@ import './home.less'
 export default {
   data(){
     return {
-      MenuList:[]
+      MenuList:[],
+      activeName:'',
+      openNames:[]
     }
   },
   components: {
@@ -58,21 +60,24 @@ export default {
       }).catch(err => {
         this.$Message.error('退出登录失败！')
       })
-    },
-    // onSelect(name){
-    //   this.$store.commit('activeName',name)
-    //   this.$refs.side_menu.updateOpened()
-    //   this.$refs.side_menu.updateActiveName()
-    // },
-    // onOpenChange(name){
-    //   // console.log(name)
-    //   // this.$store.commit('openNames',name)
-    // }
+    }
   },
   mounted(){
     this.MenuList = this.$store.state.accountNumber.MenuLists
+    let path = this.$route.path
+    this.activeName = path.split('/')[1]
+    this.MenuList.forEach(item => {
+      item.children.forEach(item2 => {
+        if (item2.name === this.activeName) {
+          this.openNames.push(item.name)
+        }
+      })
+    })
+    this.$nextTick(() => {
+        this.$refs.side_menu.updateOpened();
+        this.$refs.side_menu.updateActiveName();
+    });
   }
-
 }
 </script>
 <style lang="less">

@@ -65,7 +65,7 @@ export default {
           sortable: true
         },
       ],
-      endDate:''
+      endDate:new Date()
     }
   },
   computed:{
@@ -73,7 +73,7 @@ export default {
       "MonthlyReportDataList"
     ]),
     formatDates(){
-      return formatDate(this.endDate)
+      return formatDate(this.endDate).substring(0,6)
     }
   },
   methods:{
@@ -101,7 +101,7 @@ export default {
     tablePage
   },
   mounted(){
-
+    this.search()
   }
 }
 </script>

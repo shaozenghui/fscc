@@ -106,6 +106,8 @@ body{
   border-radius: 4px;
   position: absolute;
   top: 50%;
+  left:50%;
+  margin-left: -200px;
   margin-top: -200px;
 }
 .ivu-input{

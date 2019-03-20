@@ -28,49 +28,59 @@ export default {
         {
           key: 'SerialNumber',
           title: '序号',
+          width:50
         },
         {
           key: 'division_number',
           title: '明亚号',
+          width:250
         },
         {
           key: 'recognizee',
           title: '被保人',
-          sortable: true
+          sortable: true,
+           width:150
         },
         {
           key: 'pre_platform_bonus',
           title: '预估平台奖',
-          sortable: true
+          sortable: true,
+           width:150
         },
         {
           key: 'platform_bonus',
           title: '实收平台奖',
-          sortable: true
+          sortable: true,
+           width:150
         },
         {
           key: 'pre_platform_ratio',
           title: '预估比例',
-          sortable: true
+          sortable: true,
+           width:150
         },
         {
           key: 'platform_ratio',
           title: '实收比例',
-          sortable: true
+          sortable: true,
+           width:150
         },
         {
           key: 'year_month_start',
           title: '开始年月',
-          sortable: true
+          sortable: true,
+           width:150
         },
         {
           key: 'year_month_end',
           title: '结束年月',
-          sortable: true
+          sortable: true,
+           width:150
         },
         {
           key: 'operation',
           title: '操作',
+           width:150,
           render: (h, {row, column, index}) => {
             return (
               <i-button type='primary' on-click={this.submitOk.bind(this,{ row })}>OK</i-button>

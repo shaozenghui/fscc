@@ -26,7 +26,6 @@
                       </FormItem>
                     </Form>
                 </TabPane>
-
             </Tabs>
         </i-col>
       </Row>
@@ -73,7 +72,7 @@ export default {
       'getusernameChange',
       'getLogOut'
     ]),
-    
+
     PasSubmit(name) {
       this.$refs[name].validate((valid) => {
         this.valid = valid

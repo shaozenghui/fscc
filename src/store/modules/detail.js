@@ -27,6 +27,7 @@ const actions = {
   getSearchDetailData ({ commit, state }, data) {
     return new Promise((resolve, reject) => {
       SearchDetailData(data).then(res => {
+        resolve()
         commit(GETDETAILDATALIST, res.result)
       }).catch(err => {
         reject(err)
@@ -36,6 +37,7 @@ const actions = {
   getPolicyUserData ({ commit, state }, data) {
     return new Promise((resolve, reject) => {
       PolicyUserData(data).then(res => {
+        resolve()
         commit(GETPOLICYUSERLIST, res.result)
       }).catch(err => {
         reject(err)

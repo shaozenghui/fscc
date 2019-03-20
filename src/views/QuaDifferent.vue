@@ -29,61 +29,73 @@ export default {
           key: 'SerialNumber',
           title: '序号',
           fixed: 'left',
+          width:50
         },
         {
           key: 'division_number',
           title: '明亚号',
-          sortable: true
+          sortable: true,
+          width:200
         },
         {
           key: 'recognizee',
           title: '被保人',
-          sortable: true
+          sortable: true,
+          width:100
         },
         {
           key: 'pre_quarter_bonus',
           title: '预估季度奖',
-          sortable: true
+          sortable: true,
+           width:150
         },
         {
           key: 'quarter_bonus',
           title: '实收季度奖',
-          sortable: true
+          sortable: true,
+           width:150
         },
         {
           key: 'pre_insurer_fee',
           title: '预估保司手续费',
-          sortable: true
+          sortable: true,
+           width:150
         },
         {
           key: 'insurer_fee',
           title: '实际保司手续费',
-          sortable: true
+          sortable: true,
+           width:150
         },
         {
           key: 'pre_pay_ratio',
           title: '预估所得比例',
-          sortable: true
+          sortable: true,
+           width:150
         },
         {
           key: 'pay_ratio',
           title: '实际比例',
-          sortable: true
+          sortable: true,
+           width:150
         },
         {
           key: 'year_month_start',
           title: '开始年月',
-          sortable: true
+          sortable: true,
+           width:150
         },
         {
           key: 'year_month_end',
           title: '结束年月',
-          sortable: true
+          sortable: true,
+           width:150
         },
         {
           key: 'operation',
           title: '操作',
           fixed: 'right',
+          width:150,
           render: (h, {row, column, index}) => {
             return (
               <i-button type='primary' on-click={this.submitOk.bind(this,{ row })}>OK</i-button>

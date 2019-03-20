@@ -37,7 +37,7 @@ export default {
         {
           key: 'company',
           title: '公司',
-          width:150,
+          width:200,
         },
         {
           key: 'name',

@@ -342,7 +342,7 @@ export default {
       this.getPolicyUserData({
         division_number:row.division_number
       }).then(() => {
-
+        this.$Message.success('查询成功!');
       }).catch(err => {
         this.$Message.error('数据初始化失败!');
       })

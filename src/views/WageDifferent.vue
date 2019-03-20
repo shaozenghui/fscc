@@ -23,11 +23,13 @@ export default {
         {
           key: 'SerialNumber',
           title: '序号',
+          width:50
         },
 
         {
           key: 'division_number',
           title: '明亚号',
+          width:200
         },
         {
           key: 'recognizee',
@@ -78,13 +80,18 @@ export default {
        })
     },
     Search(){
-      this.getWageDifferentDataList({'date':this.formatDates})
-      .then(()=>{
-        this.$Message.success('查询成功!')
-      })
-      .catch(err => {
-        this.$Message.error('查询失败!')
-      })
+      // if (!this.formatDates) {
+      //     this.$Message.error('请选择日期!')
+      // } else {
+        this.getWageDifferentDataList({'date':this.formatDates})
+        .then(()=>{
+          this.$Message.success('查询成功!')
+        })
+        .catch(err => {
+          this.$Message.error('查询失败!')
+        })
+      // }
+
     }
   },
   computed:{
