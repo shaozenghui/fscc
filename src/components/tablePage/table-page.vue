@@ -50,8 +50,10 @@ export default {
     },
     init(){
       // setTimeout(() => {
+
         this.datatotal = this.dataList.length
         this.data = this.dataList.slice((this.currentPage - 1) * this.PageSize,this.currentPage*this.PageSize)
+
       // },1000)
     }
   },
@@ -63,10 +65,13 @@ export default {
       this.init()
     },
     dataList(){
+      // this.currentPage = 1
+      // this.PageSize = 10
       this.init()
     }
   },
   mounted(){
+
     this.init()
   }
 }
@@ -77,6 +82,4 @@ export default {
 }
 
 </style>
-// 1   0  -  10
-// 2   10  - 20
-// 3   20  - 30
+

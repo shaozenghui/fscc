@@ -1,4 +1,4 @@
-import { TeamListData, TeamListUserList, TeamListAdd, TeamListUpdate, TeamListDelete  } from '@/api/teamList'
+import { TeamListData, TeamListUserList, TeamListAdd, TeamListUpdate, TeamListDelete } from '@/api/teamList'
 import { GETTEAMLISTDATALIST, GETUSERLIST } from '../types'
 
 const state = {
@@ -31,7 +31,6 @@ const actions = {
   getTeamListAdd ({ commit, state }, data) {
     return new Promise((resolve, reject) => {
       TeamListAdd(data).then(resp => {
-        console.log(resp)
         if (resp.code === '200') {
           resolve(resp)
         } else reject(resp)
@@ -43,8 +42,7 @@ const actions = {
   getTeamListUpdate ({ commit, state }, data) {
     return new Promise((resolve, reject) => {
       TeamListUpdate(data).then(resp => {
-        console.log(resp)
-        if (resp.data) {
+        if (resp.code) {
           if (resp.code === '200') {
             resolve(resp)
           } else reject(resp)

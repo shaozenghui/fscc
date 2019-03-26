@@ -8,7 +8,7 @@
       <tablePage :columns="columns" :dataList="MemberListDataList" ></tablePage>
       <Modal
         v-model="modal"
-        title="添加成员">
+        :title="modalTitle">
         <Row type="flex" justify="center" align="middle">
           <i-col span='20'>
             <Form v-if="modal" :model="formItem" label-position="left"  class="from" ref="formItem" :rules="ruleValidate">
@@ -31,6 +31,7 @@ export default {
   name: 'MemberList',
   data(){
     return{
+      modalTitle:'添加成员',
       formItem: {
         name:""
       },
@@ -91,10 +92,12 @@ export default {
     ]),
     addHandle(name,{ row } = { }){
       if(name === 'add'){
+        this.modalTitle = '添加成员'
         this.is_add = true
       } else {
         this.id = row.id
         this.is_add = false
+         this.modalTitle = '更新成员'
         this.getMemberUpdate({id:row.id}).then(res => {
           this.formItem = res
         }).catch(err => {

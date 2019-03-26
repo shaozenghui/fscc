@@ -8,7 +8,7 @@
     <tablePage :columns="columns" :dataList="TeamListDataList" ></tablePage>
     <Modal
         v-model="modal"
-        title="添加团队"
+        :title="modalTitle"
         >
       <div >
         <Row type="flex" justify="center" align="middle">
@@ -45,6 +45,7 @@ export default {
   name: 'excel-import',
   data(){
     return {
+      modalTitle:'添加团队',
       columns:[
         {
           key: 'serialNumber',
@@ -134,7 +135,9 @@ export default {
       if(name === 'add') {
         this.is_add = true
         this.getTeamListUserList()
+        this.modalTitle = '添加团队'
       } else if(name === 'change') {
+        this.modalTitle = '更新团队'
         this.id = row.id
         this.is_add = false
         this.getTeamListUpdate({id:row.id}).then(res => {

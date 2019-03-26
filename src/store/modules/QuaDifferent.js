@@ -11,7 +11,7 @@ const getters = {
 const actions = {
   getQuaDifferentDataList ({ commit, state }, data) {
     return new Promise((resolve, reject) => {
-      getQuaDifferentData().then(res => {
+      getQuaDifferentData(data).then(res => {
         resolve()
         commit(GETQUADIFFERENTDATALIST, res.result)
       }).catch(err => {

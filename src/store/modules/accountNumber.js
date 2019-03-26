@@ -7,7 +7,7 @@ const state = {
     '团队列表': true,
     '员工信息': true,
     '成员列表': true,
-    '员工设置': true
+    '员工': true
   },
   MenuLists: MenuList
 }

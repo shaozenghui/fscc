@@ -13,7 +13,7 @@ const actions = {
     return new Promise((resolve, reject) => {
       SearchMonthlyReportData(data).then(resp => {
         resolve()
-        commit(GETMONTHLYREPORTDATALIST, resp.result)
+        commit(GETMONTHLYREPORTDATALIST, resp.result.result)
       }).catch(err => {
         reject(err)
       })

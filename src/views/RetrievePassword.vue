@@ -45,13 +45,16 @@ import { setToken } from '@/lib/util'
 export default {
   name: 'RetrievePassword',
   data(){
+
     return {
+      // 表单数据
       formItem: {
         email:"",
         code:'',
         password:'',
         // newPswAgs:''
       },
+      // 表单规则
       ruleInline: {
           email: [
               { required: true, message: '邮箱不能为空', trigger: 'blur' },
@@ -79,6 +82,7 @@ export default {
       'getsendCode',
       'getRetrievePassword'
     ]),
+    // 重置密码
      handleSubmit(name) {
         this.$refs[name].validate((valid) => {
             if (valid) {
@@ -95,6 +99,7 @@ export default {
             }
         })
     },
+    // 发送验证码
     sendCode(){
       if(this.formItem.email){
         var con = 60

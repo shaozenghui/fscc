@@ -9,7 +9,7 @@
       <tablePage :columns="columns" :dataList="MemberInformationDataList" ></tablePage>
       <Modal
         v-model="modal"
-        title="添加员工">
+        :title="modalTitle">
         <Row type="flex" justify="center" align="middle">
           <i-col span='20'>
             <Form v-if="modal" :model="formItem" label-position="left"  class="from" ref="formItem" :rules="ruleValidate" inline>
@@ -54,6 +54,7 @@ export default {
   name: 'MemberInformation',
   data(){
     return{
+      modalTitle : '添加员工',
       formItem: {
         email:'',
         username:"",
@@ -93,7 +94,7 @@ export default {
             { min: 6,  message: '用户名最少为六位', trigger: 'blur', type: 'string' },
         ],
         password: [
-            { message: '请输入密码', trigger: 'blur' },
+            {  message: '请输入密码', trigger: 'blur' },
             { min: 8,  message: '密码最少为八位', trigger: 'blur', type: 'string' },
         ],
         is_superuser: [
@@ -171,8 +172,9 @@ export default {
       if(name === 'add'){
          this.is_add = true
          this.modal = true
-      }
-      else {
+         this.modalTitle = '添加员工'
+      } else {
+        this.modalTitle = '更新员工'
         this.is_add = false
         this.modal = true
         this.staff_id = row.id

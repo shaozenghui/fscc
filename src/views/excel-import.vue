@@ -37,10 +37,15 @@ export default {
   name: 'excel-import',
   data(){
     return {
+      // 导入Excel的路径
       BaseURL:'',
+      // 选择导入的类型项
       achievement: 'ach',
+      // 导入文件的年月
       yearMonth:{},
+      // 数据列表
       ExcelDataList:[],
+      // 类型列表
       achievementList: [
         {
           value: 'ach',
@@ -55,9 +60,11 @@ export default {
           label: '季度平台奖',
         }
       ],
+      // 头信息
       headers:{
          'Authorization': `Token ${getToken()}`
       },
+      // 表格title
       columns:[
         {
           key: 'serialNumber',
@@ -118,6 +125,7 @@ export default {
           )
         }
       })
+      // 保存文件请求
       this.getSaveExcel(this.achievement).then(() => {
         this.$Message.info('保存成功！');
         this.$Spin.hide();
@@ -126,6 +134,7 @@ export default {
       })
 
     },
+    // 导入文件成功钩子
     uploadSuccess(res, file, fileList){
       res.result.map((item, index) => {
         item.serialNumber = index + 1
@@ -137,10 +146,12 @@ export default {
     progress(event, file, fileList){
 
     },
+    // 导入文件失败钩子
     error(error, file, fileList){
       this.$Spin.hide();
       this.$Message.error('导入文件失败！');
     },
+    // 导入文件之前钩子
     beforeUpload(file){
       this.$Spin.show({
         render: (h) => {
@@ -152,6 +163,7 @@ export default {
           )
         }
       })
+      // 判断是那种导入类型
       if(this.achievement === 'pay') {
         let str = file.name.slice(file.name.length - 11, file.name.length - 5)
         this.yearMonth = {

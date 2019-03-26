@@ -47,3 +47,15 @@ export const PolicyUserDelete = (id) => {
 
   })
 }
+
+export const DownloadDetail = (data) => {
+  let url = '/finance/reportForm/detail/download/'
+  if (data) {
+    url = `/finance/reportForm/detail/download/?division_number=${data.division_number}&seller=${data.seller}&refer_date=${data.refer_date}&policy_holder=${data.policy_holder}&recognizee=${data.recognizee}`
+  }
+  return axios.request({
+    url,
+    method: 'get',
+    data: {}
+  })
+}

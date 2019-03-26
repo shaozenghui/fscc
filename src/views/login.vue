@@ -29,10 +29,12 @@ export default {
   name: 'login',
   data(){
     return {
+      // 表单数据
       formItem: {
         username:"",
         password:''
       },
+      // 表单规则
       ruleInline: {
           username: [
               { required: true, message: '请输入用户名', trigger: 'blur' },
@@ -46,6 +48,7 @@ export default {
     }
   },
   mounted(){
+    // 回车键登录
     var _this = this;
     document.onkeydown = function(e){
       if (e.keyCode == 13) {
@@ -59,6 +62,7 @@ export default {
       'setSuperuser',
       'getSuperuser'
     ]),
+    // 提交表单
     handleSubmit(name) {
         this.$refs[name].validate((valid) => {
             if (valid) {
@@ -74,6 +78,7 @@ export default {
             }
         })
     },
+    // 找回密码
     RetrievePassword(){
       this.$router.push({path: '/RetrievePassword'})
     }

@@ -20,16 +20,16 @@
         <i-col span='3'>
           <i-button type='primary' icon='ios-search' @click="search">查询</i-button>
         </i-col>
-        <!-- <i-col span='3'>
-          <i-button type='primary' icon='ios-cloud-upload'>导出</i-button>
-        </i-col> -->
+        <i-col span='3' push='4'>
+          <i-button type='primary' icon='ios-cloud-upload' @click="Download">导出</i-button>
+        </i-col>
       </Row>
       <tablePage :columns="columns" :dataList="DetailDataList" ></tablePage>
       <Modal v-model="modal"  fullscreen>
           <p slot="header" style="text-align:center">保单联合人</p>
           <div style="text-align:center;width:1000px;margin:0 auto">
             <Row>
-             <i-col span='3' push='21'>
+              <i-col span='3' push='21'>
                 <i-button type='primary' @click="policyUserAdd">添加保单联合人</i-button>
               </i-col>
             </Row>
@@ -70,6 +70,7 @@
 import { mapGetters, mapActions } from 'vuex'
 import tablePage from '_c/tablePage'
 import { formatDate } from '@/lib/tools'
+import { baseURL2 } from '@/config'
 export default {
   name: 'detail',
   data(){
@@ -107,13 +108,13 @@ export default {
         },
         {
           key: 'pay_mode',
-          title: '缴费期间',
+          title: '缴费方式',
           width:150,
           sortable: true
         },
         {
           key: 'pay_period',
-          title: '缴费年限',
+          title: '缴费期间',
           width:150,
           sortable: true
         },
@@ -138,7 +139,7 @@ export default {
         },
         {
           key: 'medical_status',
-          title: '是否体检',
+          title: '是否医疗部',
           width:150,
           sortable: true
         },
@@ -162,7 +163,7 @@ export default {
         },
         {
           key: 'insurer_fee',
-          title: '保险费率',
+          title: '保司手续费',
           width:150,
           sortable: true
         },
@@ -262,6 +263,7 @@ export default {
           }
         },
       ],
+      // 是否保单联系人成员的判断
       flag:true,
       policyUserColumns:[
         {
@@ -304,8 +306,11 @@ export default {
             }}
         ],
       },
+      // 编辑保单联系人模态框
       modal: false,
+      // 添加保单联系人模态框
       modal2: false,
+      // 查找列表
       searchData: {
         seller:'',
         policy_holder:'',
@@ -335,7 +340,8 @@ export default {
        'getPolicyUserData',
        'getPolicyUserAdd',
        'getPolicyUserUpdate',
-       'getPolicyUserDelete'
+       'getPolicyUserDelete',
+       'getDownloadDetail'
     ]),
     editHandel({row}){
       this.division_number = row.division_number
@@ -351,9 +357,12 @@ export default {
     search(){
       let data = this.searchData;
       data.refer_date = formatDate(this.searchData.refer_date)
+      this.Loading()
       this.getSearchDetailData(data).then(() => {
-        this.$Message.sucess('查询成功!')
+        this.$Spin.hide()
+        this.$Message.success('查询成功!');
       }).catch(err => {
+        this.$Spin.hide()
         this.$Message.error('查询失败!');
       })
     },
@@ -362,10 +371,10 @@ export default {
       this.formItem[key] = ''
       }
     },
-     ok(){
+    ok(){
        for (var key in this.formItem) {
         this.formItem[key] = ''
-        }
+       }
     },
     policyUserChange({ row }){
       this.flag = false
@@ -398,6 +407,14 @@ export default {
       this.is_add = true
       this.getPolicyUserAdd()
       this.modal2 = true
+    },
+    Download(){
+      this.getDownloadDetail(this.searchData).then(res => {
+        let url = `${baseURL2}${res}`
+        window.open(url)
+      }).catch(err => {
+        this.$Message.error('导出失败!')
+      })
     },
     handleSubmit(name) {
       this.$refs[name].validate((valid) => {
@@ -442,10 +459,29 @@ export default {
             this.$Message.error('请完善信息!');
           }
       })
+    },
+    Loading(){
+      this.$Spin.show({
+        render: (h) => {
+          return (
+            <div>
+              <Icon type='ios-loading' size='18' style={{animation:'ani-demo-spin 1s linear infinite'}} />
+              <div>正在加载数据请稍等。。。</div>
+            </div>
+          )
+        }
+      })
     }
   },
   mounted(){
-    this.getDetailDataList()
+    this.Loading()
+    this.getDetailDataList().then(() => {
+      this.$Message.success('请求成功!');
+      this.$Spin.hide()
+    }).catch(err => {
+      this.$Spin.hide()
+      this.$Message.error('数据加载失败!');
+    })
   }
 }
 </script>

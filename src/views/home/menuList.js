@@ -7,7 +7,7 @@ export default [
       {
         title: 'Excel导入',
         name: 'excel-import',
-        icon: 'ios-cloud-upload-outline',
+        // icon: 'ios-cloud-upload-outline',
         path: '/excel-import'
       }
     ]
@@ -20,13 +20,13 @@ export default [
       {
         title: '保险产品导入',
         name: 'InsuranceProduct-import',
-        icon: 'logo-xbox',
+        // icon: 'logo-xbox',
         path: '/InsuranceProduct-import'
       },
       {
         title: '添加保险产品',
         name: 'AddInsuranceProduct',
-        icon: 'logo-xbox',
+        // icon: 'logo-xbox',
         path: '/AddInsuranceProduct'
       }
     ]
@@ -39,7 +39,7 @@ export default [
       {
         title: '详情表',
         name: 'detail',
-        icon: 'ios-paper-outline',
+        // icon: 'ios-paper-outline',
         path: '/detail'
       }
     ]
@@ -52,19 +52,19 @@ export default [
       {
         title: '业绩周报表',
         name: 'perWeek',
-        icon: 'ios-stats-outline',
+        // icon: 'ios-stats-outline',
         path: '/perWeek'
       },
       {
         title: '业绩月报表',
         name: 'MonthlyReport',
-        icon: 'ios-stats-outline',
+        // icon: 'ios-stats-outline',
         path: '/MonthlyReport'
       },
       {
         title: '个人业绩汇总表',
         name: 'PerPerfSummary',
-        icon: 'ios-stats-outline',
+        // icon: 'ios-stats-outline',
         path: '/PerPerfSummary'
       }
     ]
@@ -77,19 +77,19 @@ export default [
       {
         title: '工资差异表',
         name: 'WageDifferent',
-        icon: 'ios-film-outline',
+        // icon: 'ios-film-outline',
         path: '/WageDifferent'
       },
       {
         title: '季度奖差异表',
         name: 'QuaDifferent',
-        icon: 'ios-film-outline',
+        // icon: 'ios-film-outline',
         path: '/QuaDifferent'
       },
       {
         title: '平台奖差异表',
         name: 'PlaDifferent',
-        icon: 'ios-film-outline',
+        // icon: 'ios-film-outline',
         path: '/PlaDifferent'
       }
     ]
@@ -102,13 +102,13 @@ export default [
       {
         title: '团队列表',
         name: 'teamList',
-        icon: 'ios-people',
+        // icon: 'ios-people',
         path: '/teamList'
       },
       {
         title: '成员列表',
         name: 'MemberList',
-        icon: 'ios-people',
+        // icon: 'ios-people',
         path: '/MemberList'
       }
     ]
@@ -121,7 +121,7 @@ export default [
       {
         title: '员工信息',
         name: 'MemberInformation',
-        icon: 'md-contacts',
+        // icon: 'md-contacts',
         path: '/MemberInformation'
       }
     ]
@@ -134,7 +134,7 @@ export default [
       {
         title: '个人设置',
         name: 'PersonalSet',
-        icon: 'ios-settings-outline',
+        // icon: 'ios-settings-outline',
         path: '/PersonalSet'
       }
     ]

@@ -22,8 +22,8 @@ export default {
   name: 'QuaDifferent',
   data(){
     return{
-      start_date:'',
-      end_date:'',
+      start_date:new Date(),
+      end_date:new Date(),
       columns:[
         {
           key: 'SerialNumber',

@@ -41,8 +41,11 @@ import './home.less'
 export default {
   data(){
     return {
+      // 侧边栏菜单列表
       MenuList:[],
+      // 侧边菜单的选中项
       activeName:'',
+      // 侧边菜单的展开项
       openNames:[]
     }
   },
@@ -53,6 +56,7 @@ export default {
     ...mapActions([
       'getLogOut'
     ]),
+    // 退出登录
     loginOut(){
       this.getLogOut().then(() => {
         this.$Message.success('退出登录成功！')
@@ -63,7 +67,9 @@ export default {
     }
   },
   mounted(){
+    // 挂载后渲染，得到的是经过权限判断处理的菜单列表
     this.MenuList = this.$store.state.accountNumber.MenuLists
+    // 根据路由设置动态菜单列表
     let path = this.$route.path
     this.activeName = path.split('/')[1]
     this.MenuList.forEach(item => {

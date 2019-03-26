@@ -5,10 +5,13 @@
           <p class="fromtitle">添加保险产品</p>
           <Form v-if="Object.keys(ruleInline).length"  :model="formItem" label-position="left" :label-width="160" class="from" :rules="ruleInline" ref="formInline">
             <FormItem label="公司"  prop="company">
-                  <Input v-model="formItem.company" placeholder="请输入公司" size='large' :disabled='id'></Input>
+                  <Input v-model="formItem.company" placeholder="请输入公司" size='large' :disabled='flag'></Input>
             </FormItem>
             <FormItem label="名称"  prop="name">
                   <Input v-model="formItem.name" placeholder="请输入名称" size='large'></Input>
+            </FormItem>
+             <FormItem label="产品ID"  prop="product_id">
+                  <Input v-model="formItem.product_id" placeholder="请输入产品ID" size='large'></Input>
             </FormItem>
             <FormItem label="保司手续费"  prop="insurer_fee">
                   <Input   v-model="formItem.insurer_fee" placeholder="请输入保司手续费" size='large'  ></Input>
@@ -46,10 +49,12 @@ export default {
   name: 'AddInsuranceProduct',
   data(){
     return {
+      // 公司输入框是否更改
       flag:false,
       formItem: {
         company:'',
         name:'',
+        product_id:'',
         insurer_fee:'',
         commission_rate_first: '',
         commission_rate_second: '',
@@ -65,6 +70,9 @@ export default {
           name: [
               { required: true, message: '请输入名称', trigger: 'blur' },
               { type: 'string', min: 6, message: '名称最少为六个字符', trigger: 'blur' }
+          ],
+          product_id: [
+              {  message: '请输入产品ID', trigger: 'blur' },
           ],
           insurer_fee: [
             {  required: true, message: '请输入保司手续费', trigger: 'blur' },
@@ -114,7 +122,9 @@ export default {
     handleSubmit(name,id) {
         this.$refs[name].validate((valid) => {
             if (valid) {
+              //判断是新建还是更新
               if (this.id) {
+                // 更新处理
                 this.getInsuranceProductUpdate({
                   id:id,
                   data:this.formItem
@@ -125,6 +135,7 @@ export default {
                   this.$Message.error('保存失败!');
                 })
               } else {
+                // 新建处理
                 this.getInsuranceProductAdd(this.formItem).then(() => {
                   this.$Message.success('保存成功!');
                   this.$router.push({name:'InsuranceProduct'})
@@ -143,13 +154,16 @@ export default {
   mounted(){
     this.$nextTick(() => {
       this.id = this.$route.query.id
+      // 更新请求数据
       if(this.id){
+
+        this.flag = true
         this.getInsuranceProductUpdate(this.$route.query).then(res => {
           let obj = {}
           for(let key in res){
-            obj[key] = res[key].toString()
+            res[key] = (typeof res[key]) === 'number'  ? res[key].toString() : res[key]
           }
-          this.formItem =  Object.assign(this.formItem, obj)
+          this.formItem =  Object.assign(this.formItem, res)
           this.ruleInline = this.ruleInline
         }).catch(err => {
           this.$Message.error('请求数据失败!');

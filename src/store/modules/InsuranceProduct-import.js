@@ -9,8 +9,8 @@ const getters = {
   }
 }
 const actions = {
-  getInsuranceProductDataList ({ commit, state }) {
-    InsuranceProductData().then(resp => {
+  getInsuranceProductDataList ({ commit, state }, data) {
+    InsuranceProductData(data).then(resp => {
       commit(GETINSURANCEPRODUCTDATALIST, resp.result)
     }).catch(err => {
       console.log(err)

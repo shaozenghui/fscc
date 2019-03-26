@@ -1,4 +1,4 @@
-import { DetailData, SearchDetailData, PolicyUserData, PolicyUserAdd, PolicyUserUpdate, PolicyUserDelete } from '@/api/detail'
+import { DetailData, SearchDetailData, PolicyUserData, PolicyUserAdd, PolicyUserUpdate, PolicyUserDelete, DownloadDetail } from '@/api/detail'
 import { GETDETAILDATALIST, GETPOLICYUSERLIST, GETPOLICYPERLIST } from '../types'
 const state = {
   dataList: [],
@@ -18,17 +18,22 @@ const getters = {
 }
 const actions = {
   getDetailDataList ({ commit, state }) {
-    DetailData().then(res => {
-      commit(GETDETAILDATALIST, res.result)
-    }).catch(err => {
-      console.log(err)
+    return new Promise((resolve, reject) => {
+      DetailData().then(res => {
+        resolve()
+        commit(GETDETAILDATALIST, res.result)
+      }).catch(err => {
+        reject(err)
+      })
     })
   },
   getSearchDetailData ({ commit, state }, data) {
     return new Promise((resolve, reject) => {
       SearchDetailData(data).then(res => {
-        resolve()
-        commit(GETDETAILDATALIST, res.result)
+        if (res.result) {
+          resolve()
+          commit(GETDETAILDATALIST, res.result)
+        }
       }).catch(err => {
         reject(err)
       })
@@ -78,6 +83,17 @@ const actions = {
         if (res.code === '200') {
           resolve()
         } else reject(res)
+      }).catch(err => {
+        reject(err)
+      })
+    })
+  },
+  getDownloadDetail ({ commit, state }, data) {
+    return new Promise((resolve, reject) => {
+      DownloadDetail(data).then(res => {
+        if (res.code === '200') {
+          resolve(res.url)
+        } else reject(res.code)
       }).catch(err => {
         reject(err)
       })

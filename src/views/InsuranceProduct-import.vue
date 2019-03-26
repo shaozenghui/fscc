@@ -1,10 +1,16 @@
 <template>
   <div>
-    <Row>
+    <Row :gutter='10'>
+      <i-col span='5'>
+        <Input v-model="product_id" placeholder="请输入产品ID"  />
+      </i-col>
+      <i-col span='3'>
+        <i-button type='primary' icon='ios-search' @click="Search">查询</i-button>
+      </i-col>
       <i-col span='6'>
         <Button type="primary" @click="addInsur">添加</Button>
       </i-col>
-      <i-col span='4' push='15'>
+      <i-col span='4' push='7'>
         <Upload
         :action="`${baseURL}/finance/importExcel/insurance`"
         :show-upload-list='false'
@@ -27,12 +33,13 @@ export default {
   data(){
     return {
       baseURL,
+      product_id:'',
       columns:[
         {
           key: 'serialNumber',
           title: '序号',
           fixed: 'left',
-          width:50
+          width:80
         },
         {
           key: 'company',
@@ -42,6 +49,11 @@ export default {
         {
           key: 'name',
           title: '名称',
+          width:300
+        },
+        {
+          key: 'product_id',
+          title: '产品ID',
           width:300
         },
         {
@@ -113,16 +125,22 @@ export default {
       'getInsuranceProductDataList',
       'getInsuranceProductDataExcel'
     ]),
+    // 添加保险产品
     addInsur(){
       this.$router.push({name: 'AddInsuranceProduct'})
     },
+    // 更新保险产品
     addHandle({ row }){
       this.$router.push({name: 'AddInsuranceProduct',query:{id:row.id}})
     },
+    // 导入成功钩子
     uploadSuccess(res, file, fileList){
       this.getInsuranceProductDataExcel(res.result)
       this.$Message.success('导入成功!')
     },
+    Search(){
+      this.getInsuranceProductDataList(this.product_id)
+    }
   },
   mounted(){
     this.getInsuranceProductDataList()
