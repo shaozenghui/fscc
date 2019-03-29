@@ -5,12 +5,12 @@
         <p class="fromtitle">财务结算系统</p>
           <Form :model="formItem"  class="from" :rules="ruleInline" ref="formInline" >
             <FormItem prop="username">
-                  <Input  v-model="formItem.username" placeholder="请输入用户名" size='large'>
+                  <Input  v-model.trim="formItem.username" placeholder="请输入用户名" size='large'>
                    <Icon type="ios-contact" slot="prepend"></Icon>
                   </Input>
             </FormItem>
             <FormItem prop="password">
-                <Input  v-model="formItem.password" placeholder="请输入密码" size='large' type="password">
+                <Input  v-model.trim="formItem.password" placeholder="请输入密码" size='large' type="password">
                    <Icon type="md-lock" slot="prepend"></Icon>
                 </Input>
             </FormItem>

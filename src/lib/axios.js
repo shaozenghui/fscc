@@ -27,12 +27,9 @@ class HttpRequest {
       if (!Object.keys(this.queue).length) {
 
       }
-      if (url !== '/finance/login') {
-        if (url !== '/finance/forgotPassword/sendCode') {
-          if (url !== '/finance/forgotPassword/retrievePassword') {
-            config.headers['Authorization'] = `Token ${getToken()}`
-          }
-        }
+      config.headers['Content-Type'] = 'application/json'
+      if (getToken()) {
+        config.headers['Authorization'] = `Token ${getToken()}`
       }
       return config
     }, error => {
